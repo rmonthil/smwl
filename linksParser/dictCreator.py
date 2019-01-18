@@ -12,7 +12,7 @@ from sys import setrecursionlimit
 setrecursionlimit(10000)
 
 words_to_fetch = []
-with open('input/words_to_fetch.txt', 'r', encoding='utf-8') as f:
+with open('words_to_fetch.txt', 'r', encoding='utf-8') as f:
 	txt = f.read().split('\n')
 	for t in txt:
 		# Removing number of occurences
@@ -24,7 +24,7 @@ with open('input/words_to_fetch.txt', 'r', encoding='utf-8') as f:
 words_dict = {}
 
 # Reload whats done
-with open('output/dict.json', 'r', encoding='utf-8') as f:
+with open('dict.json', 'r', encoding='utf-8') as f:
 	words_dict = json.loads(f.read(), strict=False)
 		
 def rec_fetch(word, prog):
@@ -63,5 +63,5 @@ for word in words_to_fetch:
 	rec_fetch(word, prog)
 	prog += 1
 
-with open('ouput/dict.json', 'w') as f:
+with open('dict.json', 'w') as f:
 	json.dump(words_dict, f, sort_keys=True, indent=4)
