@@ -85,10 +85,12 @@ def rec_fetch(word, prog):
             print("Out words : " + str(words_dict[word]["out_words"]))
             print("Relevance : " + str(words_dict[word]["relevance"]))
             
-            # Saves the results for each 1000 words, in case you lose connection. 
-            if(len(words_dict) % 1000 == 0):
+            # Saves the results for each 100 words, in case you lose connection. 
+            if(len(words_dict) % 100 == 0):
                 with open('dict.json', 'w') as f:
+                    print("\n Saving ...")
                     json.dump(words_dict, f, sort_keys=True, indent=4)
+                    print("Saved \n")
         
 prog = 0
 for word in words_to_fetch:
