@@ -56,6 +56,7 @@ def getLinks(word, pNb=-1, sNb=-1):
 	# Init
 	word = word.capitalize()
 	links = []
+	occNb = []
 	
 	try:
 		# Parsing
@@ -63,6 +64,7 @@ def getLinks(word, pNb=-1, sNb=-1):
 		page = url.urlopen(req)
 		data = page.read()
 		soup = BeautifulSoup(data, 'html.parser')
+		strData = str(soup)
 		homonymie = bool(soup.find(id="homonymie"))
 		if(homonymie):
 			# print(homonymie.text)
@@ -91,11 +93,19 @@ def getLinks(word, pNb=-1, sNb=-1):
 						title = link.get("title")
 						if((not homonymie) or title.startswith(word)):
 							links.append(title)
+							occ = strData.count(title)
+							if(title.capitalize() != title):
+								occ += strData.count(title.capitalize())
+							if(title.lower() != title):
+								occ += strData.count(title.lower())
+							if(title.upper() != title):
+								occ += strData.count(title.upper())
+							occNb.append(occ)
 				j += 1
 			i += 1
 			# If no link found, just check next paragraph	
 			if(not links):
 				pNb += 1
-		return homonymie, links
+		return homonymie, links, occNb
 	except:
-		return "error", "error"
+		return "error", "error", "error"
