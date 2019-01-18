@@ -32,7 +32,7 @@ def rec_fetch(word, prog):
 	if(not (word in words_dict)):
 		
 		# Prints progression
-		print("Mot : " + word, str(prog) + '/' + str(len(words_to_fetch)), ' | Total nb of words : ' + str(len(words_dict)))
+		print("Word : " + word, str(prog) + '/' + str(len(words_to_fetch)), ' | Total nb of words : ' + str(len(words_dict)))
 		
 		homonymie, out_words = getLinks(word, 1, 1)
 		
@@ -55,7 +55,7 @@ def rec_fetch(word, prog):
 			
 			# Saves the results for each 1000 words, in case you lose connection. 
 			if(len(words_dict) % 1000 == 0):
-				with open('ouput/dict.json', 'w') as f:
+				with open('dict.json', 'w') as f:
 					json.dump(words_dict, f, sort_keys=True, indent=4)
 		
 prog = 0
