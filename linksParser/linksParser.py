@@ -21,7 +21,7 @@ from bs4 import BeautifulSoup
 	# (False, ['Fruit (alimentation humaine)', 'Alimentation', 'Pépin (graine)', 'Goût',
 	# 'Sucre', 'Acide', 'Astringence', 'Botanique', 'Fruit complexe', 'Pommier domestique', 
 	# 'Espèce', 'Malus domestica', 'Variété (botanique)', 'Cultivars', 'Fruit défendu', 
-	# 'Livre de la Genèse', 'Occident', 'P<<<éché originel', 'Acte sexuel'])	
+	# 'Livre de la Genèse', 'Occident', 'Péché originel', 'Acte sexuel'])	
 """
 
 __authors__ = "Rémi Monthiller @LeDernier"

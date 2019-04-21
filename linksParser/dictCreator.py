@@ -48,7 +48,7 @@ def rec_fetch(word, prog):
     if(not (word in words_dict)):
         
         # Prints progression
-        print("Word : " + word, ' | Prog : ' + str(prog) + '/' + str(len(words_to_fetch)), ' | Total nb of words : ' + str(len(words_dict)))
+        print("Word : " + word, ' | Prog : ' + str(int(prog * 100 / len(words_to_fetch))) + '%', ' | Total nb of words : ' + str(len(words_dict)))
         
         homonymie, out_words, occ_nb = getLinks(word, 1, 1)
         
