@@ -50,8 +50,8 @@ def rec_fetch(word, prog):
         # Prints progression
         print("Word : " + word, ' | Prog : ' + str(int(prog * 100 / len(words_to_fetch))) + '%', ' | Total nb of words : ' + str(len(words_dict)))
         
-        homonymie, out_words, occ_nb = getLinks(word, 1, 1)
-        
+        homonymie, out_words, occ_nb = getLinks(word, 2, -1)
+
         error_test = homonymie == "error"
         none_homonymie = homonymie and (not out_words)
         
@@ -78,6 +78,10 @@ def rec_fetch(word, prog):
                 i += 1
                 
             print("Word finished : " + word)
+
+            # Preventing division by 0
+            if(occ_total == 0):
+                occ_total = 1.0
             
             for i in range(len(words_dict[word]["relevance"])):
                 words_dict[word]["relevance"][i] /= occ_total
@@ -91,7 +95,7 @@ def rec_fetch(word, prog):
                     print("\n Saving ...")
                     json.dump(words_dict, f, sort_keys=True, indent=4)
                     print("Saved \n")
-        
+
 prog = 0
 for word in words_to_fetch:
     rec_fetch(word, prog)
@@ -99,3 +103,9 @@ for word in words_to_fetch:
 
 with open('dict.json', 'w') as f:
     json.dump(words_dict, f, sort_keys=True, indent=4)
+
+# Vrification of relevance
+for word in words_dict:
+    for r in words_dict[word]["relevance"]:
+        if(r > 1.0):
+	    print("Too much relevance (" + str(r)  + ") with word : " + word)

@@ -67,7 +67,6 @@ def getLinks(word, pNb=-1, sNb=-1):
 		strData = str(soup)
 		homonymie = bool(soup.find(id="homonymie"))
 		if(homonymie):
-			# print(homonymie.text)
 			pNb = -1
 			sNb = -1
 		soup = soup.find(id="mw-content-text")
@@ -93,14 +92,23 @@ def getLinks(word, pNb=-1, sNb=-1):
 						title = link.get("title")
 						if((not homonymie) or title.startswith(word)):
 							links.append(title)
-							occ = strData.count(title)
-							if(title.capitalize() != title):
-								occ += strData.count(title.capitalize())
-							if(title.lower() != title):
-								occ += strData.count(title.lower())
-							if(title.upper() != title):
-								occ += strData.count(title.upper())
-							occNb.append(occ)
+							occ = 0
+							title_words = title.split(" ")
+							div = float(len(title_words))
+							for title_word in title_words:
+								if (len(title_word) > 2):
+									# Removing "(" and ")" if necessary
+									title_word = title_word.split("(")[0].split(")")[0]
+									occ += strData.count(title_word)
+									if(title_word.capitalize() != title_word):
+										occ += strData.count(title_word.capitalize())
+									if(title_word.lower() != title_word):
+										occ += strData.count(title_word.lower())
+									if(title_word.upper() != title_word):
+										occ += strData.count(title_word.upper())
+								else:
+									div -= 1.0
+							occNb.append(occ/div)
 				j += 1
 			i += 1
 			# If no link found, just check next paragraph	
