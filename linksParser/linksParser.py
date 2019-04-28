@@ -99,13 +99,13 @@ def getLinks(word, pNb=-1, sNb=-1):
 							tmp_title_words = title.split(" ")
 							title_words = []
 							for w in tmp_title_words:
-								for ww in tmp_title_words.split("'"):
+								for ww in w.split("'"):
 									title_words.append(ww)
 							div = float(len(title_words))
 							for title_word in title_words:
 								# Removing "(" and ")" if necessary
 								title_word = title_word.split("(")[0].split(")")[0]
-								if (len(title_word) > 2 and not (title_word in prepositions)):
+								if (len(title_word) > 2 and not (title_word in preposition)):
 									occ += strData.count(title_word)
 									if(title_word.capitalize() != title_word):
 										occ += strData.count(title_word.capitalize())

@@ -108,4 +108,4 @@ with open('dict.json', 'w') as f:
 for word in words_dict:
     for r in words_dict[word]["relevance"]:
         if(r > 1.0):
-	    print("Too much relevance (" + str(r)  + ") with word : " + word)
+            print("Too much relevance (" + str(r)  + ") with word : " + word)
