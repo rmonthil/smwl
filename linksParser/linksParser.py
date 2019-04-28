@@ -26,10 +26,13 @@ from bs4 import BeautifulSoup
 
 __authors__ = "Rémi Monthiller @LeDernier"
 __version__ = "1.0"
-__email__ = "remi.monthiller@etu.enseeiht.fr"
+__email__ = "remi.monthiller@gmail.com"
 __status__ = "finished"
 
-website = "https://en.wikipedia.org/wiki/"	   
+website = "https://en.wikipedia.org/wiki/"
+
+# List of prepositions that have more than two letters that seem important to remove from relevance count.
+preposition = ["aux", "des", "dès", "avec", "par", "pour", "sans", "sur", "chez", "sauf"]
 
 def isValid(ref,paragraph):
 	if not ref or "#" in ref or "//" in ref or ":" in ref:
@@ -93,12 +96,16 @@ def getLinks(word, pNb=-1, sNb=-1):
 						if((not homonymie) or title.startswith(word)):
 							links.append(title)
 							occ = 0
-							title_words = title.split(" ")
+							tmp_title_words = title.split(" ")
+							title_words = []
+							for w in tmp_title_words:
+								for ww in tmp_title_words.split("'"):
+									title_words.append(ww)
 							div = float(len(title_words))
 							for title_word in title_words:
-								if (len(title_word) > 2):
-									# Removing "(" and ")" if necessary
-									title_word = title_word.split("(")[0].split(")")[0]
+								# Removing "(" and ")" if necessary
+								title_word = title_word.split("(")[0].split(")")[0]
+								if (len(title_word) > 2 and not (title_word in prepositions)):
 									occ += strData.count(title_word)
 									if(title_word.capitalize() != title_word):
 										occ += strData.count(title_word.capitalize())
