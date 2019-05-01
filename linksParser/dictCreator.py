@@ -10,7 +10,7 @@ from linksParser import getLinks
 
 # Greater recursion number !
 from sys import setrecursionlimit
-setrecursionlimit(10000)
+setrecursionlimit(999999999)
 
 # Set language
 linksParser.website = "https://fr.wikipedia.org/wiki/"
@@ -42,7 +42,15 @@ words_dict = {}
 # Reload whats done
 with open('dict.json', 'r', encoding='utf-8') as f:
     words_dict = json.loads(f.read(), strict=False)
-        
+
+to_pop = []
+for w in words_dict:
+    if not words_dict[w]["finished"]:
+        to_pop.append(w)
+
+for w in to_pop:
+    words_dict.pop(w)
+
 def rec_fetch(word, prog):
     word = word.capitalize()
     if(not (word in words_dict)):
@@ -55,27 +63,31 @@ def rec_fetch(word, prog):
         error_test = homonymie == "error"
         none_homonymie = homonymie and (not out_words)
         
+	words_dict[word] = {
+		"word":word,
+		"out_words":[],
+		"homonymie":homonymie,
+		"relevance":[],
+		"finished":False,
+		"error":error_test
+	}
+
         if((not error_test) and (not none_homonymie)):
         
-            words_dict[word] = {
-              "word":word,
-              "out_words":[],
-              "homonymie":homonymie,
-              "relevance":[]
-              }
-          
-            occ_total = 0.0
-            i = 0
             for w in out_words:
                 w = w.capitalize()
                 rec_fetch(w, prog)
-                
+
+            occ_total = 0.0
+            i = 0
+            for w in out_words:
                 if w in words_dict:
                     words_dict[word]["out_words"].append(w)
                     words_dict[word]["relevance"].append(occ_nb[i])
                     occ_total += occ_nb[i]
-                    
                 i += 1
+
+            words_dict[word]["finished"] = True
                 
             print("Word finished : " + word)
 
@@ -84,7 +96,7 @@ def rec_fetch(word, prog):
                 occ_total = 1.0
             
             for i in range(len(words_dict[word]["relevance"])):
-                words_dict[word]["relevance"][i] /= occ_total
+                words_dict[word]["relevance"][i] = words_dict[word]["relevance"][i]/occ_total
                 
             print("Out words : " + str(words_dict[word]["out_words"]))
             print("Relevance : " + str(words_dict[word]["relevance"]))
