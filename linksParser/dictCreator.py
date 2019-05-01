@@ -43,13 +43,14 @@ words_dict = {}
 with open('dict.json', 'r', encoding='utf-8') as f:
     words_dict = json.loads(f.read(), strict=False)
 
-to_pop = []
+unfinished_words = []
 for w in words_dict:
     if not words_dict[w]["finished"]:
-        to_pop.append(w)
+        unfinished_words.append(w)
 
-for w in to_pop:
-    words_dict.pop(w)
+for w in unfinished_words:
+    #words_dict.pop(w)
+    words_to_fetch.append(w)
 
 def rec_fetch(word, prog):
     word = word.capitalize()
@@ -63,14 +64,14 @@ def rec_fetch(word, prog):
         error_test = homonymie == "error"
         none_homonymie = homonymie and (not out_words)
         
-	words_dict[word] = {
-		"word":word,
-		"out_words":[],
-		"homonymie":homonymie,
-		"relevance":[],
-		"finished":False,
-		"error":error_test
-	}
+        words_dict[word] = {
+            "word":word,
+            "out_words":[],
+            "homonymie":homonymie,
+            "relevance":[],
+            "finished":False,
+            "error":error_test
+        }
 
         if((not error_test) and (not none_homonymie)):
         
