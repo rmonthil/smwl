@@ -55,6 +55,20 @@ words_to_fetch = [
         ("lion", "NOUN"),
         ("unicorn", "NOUN"),
         ("skeleton", "NOUN"),
+        ("monster", "NOUN"),
+        ("goose", "NOUN"),
+        ("univers", "NOUN"),
+        ("world", "NOUN"),
+        ("cake", "NOUN"),
+        ("hero", "NOUN"),
+        ("castle", "NOUN"),
+        ("dungeon", "NOUN"),
+        ("ant", "NOUN"),
+        ("carpet", "NOUN"),
+        ("hell", "NOUN"),
+        ("jungle", "NOUN"),
+        ("ghost", "NOUN"),
+        ("vampire", "NOUN"),
         ]
 out_dict = {}
 

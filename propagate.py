@@ -4,7 +4,7 @@ import simplejson as json
 import spacy
 from copy import deepcopy
 # Init
-nlp = spacy.load("en_core_web_sm")
+nlp = spacy.load("en_core_web_md")
 
 in_file = 'dict.json'
 print("READ : Reading json file : " + in_file)
@@ -18,159 +18,104 @@ output = {}
 
 print("INPUT : Defining some words")
 # Adjs
-output[str(("vegetal", "ADJ"))]={"is":{"adj":1.0}, "mods":{"vegetal":{"val":1.0}}}
-output[str(("body", "ADJ"))]={"is":{"adj":1.0}, "mods":{"body":{"val":1.0}}}
-output[str(("static", "ADJ"))]={"is":{"adj":1.0}, "mods":{"static":{"val":1.0}}}
-output[str(("burning", "ADJ"))]={"is":{"adj":1.0}, "mods":{"burning":{"val":1.0}}}
-output[str(("fluid", "ADJ"))]={"is":{"adj":1.0}, "mods":{"fluid":{"val":1.0}}}
-output[str(("vehicle", "ADJ"))]={"is":{"adj":1.0}, "mods":{"vehicle":{"val":1.0}}}
-output[str(("transport", "ADJ"))]={"is":{"adj":1.0}, "mods":{"vehicle":{"val":1.0}}}
-output[str(("animal", "ADJ"))]={"is":{"adj":1.0}, "mods":{"animal":{"val":1.0}}}
-output[str(("edible", "ADJ"))]={"is":{"adj":1.0}, "mods":{"edible":{"val":1.0}}}
-output[str(("weapon", "ADJ"))]={"is":{"adj":1.0}, "mods":{"weapon":{"val":1.0}}}
-output[str(("group", "ADJ"))]={"is":{"adj":1.0}, "mods":{"group":{"val":1.0}}}
+output[str(("vegetal", "ADJ"))]={"concepts":[{'name':'adj'}], "relations":[{"name":"vegetal", "val":1.0, 'args':[]}]}
+output[str(("body", "ADJ"))]={"concepts":[{'name':'adj'}], "relations":[{"name":"body", "val":1.0, 'args':[]}]}
+output[str(("static", "ADJ"))]={"concepts":[{'name':'adj'}], "relations":[{"name":"static", "val":1.0, 'args':[]}]}
+output[str(("burning", "ADJ"))]={"concepts":[{'name':'adj'}], "relations":[{"name":"burning", "val":1.0, 'args':[]}]}
+output[str(("fluid", "ADJ"))]={"concepts":[{'name':'adj'}], "relations":[{"name":"fluid", "val":1.0, 'args':[]}]}
+output[str(("vehicle", "ADJ"))]={"concepts":[{'name':'adj'}], "relations":[{"name":"vehicle", "val":1.0, 'args':[]}]}
+output[str(("transport", "ADJ"))]={"concepts":[{'name':'adj'}], "relations":[{"name":"vehicle", "val":1.0, 'args':[]}]}
+output[str(("animal", "ADJ"))]={"concepts":[{'name':'adj'}], "relations":[{"name":"animal", "val":1.0, 'args':[]}]}
+output[str(("edible", "ADJ"))]={"concepts":[{'name':'adj'}], "relations":[{"name":"edible", "val":1.0, 'args':[]}]}
+output[str(("weapon", "ADJ"))]={"concepts":[{'name':'adj'}], "relations":[{"name":"weapon", "val":1.0, 'args':[]}]}
+output[str(("group", "ADJ"))]={"concepts":[{'name':'adj'}], "relations":[{"name":"group", "val":1.0, 'args':[]}]}
+output[str(("plural", "ADJ"))]={"concepts":[{'name':'adj'}], "relations":[{"name":"group", "val":1.0, 'args':[]}]}
+output[str(("moving", "ADJ"))]={"concepts":[{'name':'adj'}], "relations":[{"name":"moving", "val":1.0, 'args':[]}]}
+output[str(("solid", "ADJ"))]={"concepts":[{'name':'adj'}], "relations":[{"name":"solid", "val":1.0, 'args':[]}]}
 
 # Verbs
-output[str(("cause", "VERB"))]={"is":{"cause":1.0}, "mods":{"cause":{"val":1.0, "args":[]}}}
-output[str(("have", "VERB"))]={"is":{"have":1.0}, "mods":{"have":{"val":1.0}}}
-output[str(("grab", "VERB"))]={"is":{"have":1.0}, "mods":{"have":{"val":1.0}}}
-output[str(("take", "VERB"))]={"is":{"have":1.0}, "mods":{"have":{"val":1.0}}}
-output[str(("hold", "VERB"))]={"is":{"have":1.0}, "mods":{"have":{"val":1.0}}}
-output[str(("be", "VERB"))]={"is":{"be":1.0}, "mods":{"be":{"val":1.0}}}
-output[str(("affect", "VERB"))]={"is":{"affect":1.0}, "mods":{"affect":{"val":1.0}}}
-output[str(("move", "VERB"))]={"is":{"move":1.0}, "mods":{"move":{"val":1.0}}}
-output[str(("use", "VERB"))]={"is":{"use":1.0}, "mods":{"use":{"val":1.0}}}
-output[str(("become", "VERB"))]={"is":{"become":1.0}, "mods":{"become":{"val":1.0}}}
-output[str(("consume", "VERB"))]={"is":{"consume":1.0}, "mods":{"consume":{"val":1.0}}}
-output[str(("attack", "VERB"))]={"is":{"attack":1.0}, "mods":{"attack":{"val":1.0}}}
-output[str(("turn", "VERB"))]={"is":{"turn":1.0}, "mods":{"turn":{"val":1.0}}}
-output[str(("drop", "VERB"))]={"is":{"drop":1.0}, "mods":{"drop":{"val":1.0}}}
+output[str(("cause", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"cause", "val":1.0, 'args':[{'index':0}]}]} # Can have an other relation as an argument ?
+output[str(("have", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"have", "val":1.0, 'args':[{'index':0}]}]}
+output[str(("grab", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"have", "val":1.0, 'args':[{'index':0}]}]}
+output[str(("take", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"have", "val":1.0, 'args':[{'index':0}]}]}
+output[str(("hold", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"have", "val":1.0, 'args':[{'index':0}]}]}
+output[str(("be", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"be", "val":1.0, 'args':[{'index':0}]}]}
+output[str(("move", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"move", "val":1.0, 'args':[{'index':0}]}]}
+output[str(("use", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"use", "val":1.0, 'args':[{'index':0}]}]}
+output[str(("become", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"become", "val":1.0, 'args':[{'index':0}]}]}
+output[str(("consume", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"consume", "val":1.0, 'args':[{'index':0}]}]}
+output[str(("attack", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"hit", "val":1.0, 'args':[{'index':0}]}]}
+output[str(("turn", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"turn", "val":1.0, 'args':[{'index':0}]}]}
+output[str(("drop", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"drop", "val":1.0, 'args':[{'index':0}]}]}
+output[str(("hit", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"hit", "val":1.0, 'args':[{'index':0}]}]}
 
 # Nouns
-output[str(("plant", "NOUN"))]={"is":{"object":1.0}, "mods":{"body":{"val":1.0}, "static":{"val":1.0}, "vegetal":{"val":1.0}}}
-output[str(("body", "NOUN"))]={"is":{"object":1.0}, "mods":{"body":{"val":1.0}}}
-output[str(("item", "NOUN"))]={"is":{"object":1.0}, "mods":{"body":{"val":1.0}}}
-output[str(("fire", "NOUN"))]={"is":{"object":1.0}, "mods":{"burning":{"val":1.0}}}
-output[str(("fluid", "NOUN"))]={"is":{"object":1.0}, "mods":{"fluid":{"val":1.0}}}
-output[str(("liquid", "NOUN"))]={"is":{"object":1.0}, "mods":{"body":{"val":1.0}, "fluid":{"val":1.0}}}
-output[str(("vehicle", "NOUN"))]={"is":{"object":1.0}, "mods":{"body":{"val":1.0}, "vehicle":{"val":1.0}}}
-output[str(("transport", "NOUN"))]={"is":{"object":1.0}, "mods":{"body":{"val":1.0}, "vehicle":{"val":1.0}}}
-output[str(("animal", "NOUN"))]={"is":{"object":1.0}, "mods":{"body":{"val":1.0}, "animal":{"val":1.0}}}
-output[str(("being", "NOUN"))]={"is":{"object":1.0}, "mods":{"body":{"val":1.0}, "animal":{"val":1.0}}}
-output[str(("food", "NOUN"))]={"is":{"object":1.0}, "mods":{"body":{"val":1.0}, "edible":{"val":1.0}}}
-output[str(("weapon", "NOUN"))]={"is":{"object":1.0}, "mods":{"body":{"val":1.0}, "weapon":{"val":1.0}}}
-output[str(("group", "NOUN"))]={"is":{"group":1.0}, "mods":{"group":{"val":1.0, "args":[]}}}
-output[str(("tract", "NOUN"))]={"is":{"group":1.0}, "mods":{"group":{"val":1.0, "args":[]}}}
-output[str(("extent", "NOUN"))]={"is":{"group":1.0}, "mods":{"group":{"val":1.0, "args":[]}}}
-output[str(("stream", "NOUN"))]={"is":{"stream":1.0}, "mods":{"stream":{"val":1.0}}} # Can be defined as a moving group, source ?
-output[str(("source", "NOUN"))]={"is":{"source":1.0}, "mods":{"source":{"val":1.0}}}
-output[str(("air", "NOUN"))]={"is":{"object":1.0}, "mods":{"body":{"val":1.0}, "fluid":{"val":1.0}}}
-# TODO : think about it
-output[str(("movement", "NOUN"))]={"is":{"action":1.0}, "mods":{"movement":{"val":1.0, "args":[]}}}
-output[str(("motion", "NOUN"))]={"is":{"action":1.0}, "mods":{"movement":{"val":1.0, "args":[]}}}
-#output[str(("action", "NOUN"))]={"is":{"action":1.0}, "mods":{"action":{"val":1.0}}}
-#output[str(("act", "NOUN"))]={"is":{"action":1.0}, "mods":{"action":{"val":1.0}}}
-output[str(("construction", "NOUN"))]={"is":{"construction":1.0}, "mods":{"construction":{"val":1.0}}}
-output[str(("building", "NOUN"))]={"is":{"construction":1.0}, "mods":{"construction":{"val":1.0}}}
-output[str(("location", "NOUN"))]={"is":{"location":1.0}, "mods":{"location":{"val":1.0}}}
-output[str(("place", "NOUN"))]={"is":{"location":1.0}, "mods":{"location":{"val":1.0}}}
-output[str(("region", "NOUN"))]={"is":{"location":1.0}, "mods":{"location":{"val":1.0}}}
-output[str(("area", "NOUN"))]={"is":{"location":1.0}, "mods":{"location":{"val":1.0}}}
-# Test
-#output[str(("wind", "NOUN"))]={"is":{"test":1.0}, "mods":{"test":{"val":1.0}}}
+output[str(("object", "NOUN"))]={"concepts":[{'name':'object'}], "relations":[{"name":"object", "val":1.0, 'args':[{'index':0}]}]}
+output[str(("plant", "NOUN"))]={"concepts":[{'name':'plant'}], "relations":[{"name":"vegetal", "val":0.33, 'args':[{'index':0}]}, {"name":"body", "val":0.33, 'args':[{'index':0}]}, {"name":"static", "val":0.33, 'args':[{'index':0}]}]}
+output[str(("body", "NOUN"))]={"concepts":[{'name':'body'}], "relations":[{"name":"body", "val":1.0, 'args':[{'index':0}]}]}
+output[str(("item", "NOUN"))]={"concepts":[{'name':'item'}], "relations":[{"name":"body", "val":1.0, 'args':[{'index':0}]}]}
+output[str(("fire", "NOUN"))]={"concepts":[{'name':'fire'}], "relations":[{"name":"burning", "val":1.0, 'args':[{'index':0}]}]}
+output[str(("fluid", "NOUN"))]={"concepts":[{'name':'fluid'}], "relations":[{"name":"fluid", "val":1.0, 'args':[{'index':0}]}]}
+output[str(("liquid", "NOUN"))]={"concepts":[{'name':'liquid'}], "relations":[{"name":"fluid", "val":1.0, 'args':[{'index':0}]}]}
+output[str(("water", "NOUN"))]={"concepts":[{'name':'water'}], "relations":[{"name":"fluid", "val":1.0, 'args':[{'index':0}]}]}
+output[str(("vehicle", "NOUN"))]={"concepts":[{'name':'vehicle'}], "relations":[{"name":"vehicle", "val":0.5, 'args':[{'index':0}]}, {"name":"body", "val":0.5, 'args':[{'index':0}]}]}
+output[str(("transport", "NOUN"))]={"concepts":[{'name':'transport'}], "relations":[{"name":"vehicle", "val":0.5, 'args':[{'index':0}]}, {"name":"body", "val":0.5, 'args':[{'index':0}]}]}
+output[str(("animal", "NOUN"))]={"concepts":[{'name':'animal'}], "relations":[{"name":"animal", "val":0.5, 'args':[{'index':0}]}, {"name":"body", "val":0.5, 'args':[{'index':0}]}]}
+output[str(("being", "NOUN"))]={"concepts":[{'name':'being'}], "relations":[{"name":"animal", "val":0.5, 'args':[{'index':0}]}, {"name":"body", "val":0.5, 'args':[{'index':0}]}]}
+output[str(("food", "NOUN"))]={"concepts":[{'name':'food'}], "relations":[{"name":"edible", "val":0.5, 'args':[{'index':0}]}, {"name":"body", "val":0.5, 'args':[{'index':0}]}]}
+output[str(("weapon", "NOUN"))]={"concepts":[{'name':'weapon'}], "relations":[{"name":"weapon", "val":0.5, 'args':[{'index':0}]}, {"name":"body", "val":0.5, 'args':[{'index':0}]}]}
+output[str(("group", "NOUN"))]={"concepts":[{'name':'group', 'args':[]}], "relations":[{"name":"group", "val":1.0, 'args':[{'index':0}]}]}
+output[str(("tract", "NOUN"))]={"concepts":[{'name':'group', 'args':[]}], "relations":[{"name":"group", "val":1.0, 'args':[{'index':0}]}]}
+output[str(("extent", "NOUN"))]={"concepts":[{'name':'group', 'args':[]}], "relations":[{"name":"group", "val":1.0, 'args':[{'index':0}]}]}
+output[str(("stream", "NOUN"))]={"concepts":[{'name':'stream', 'args':[]}], "relations":[{"name":"stream", "val":1.0, 'args':[{'index':0}]}]}
+output[str(("source", "NOUN"))]={"concepts":[{'name':'source', 'args':[]}], "relations":[{"name":"source", "val":1.0, 'args':[{'index':0}]}]}
+output[str(("air", "NOUN"))]={"concepts":[{'name':'air'}], "relations":[{"name":"fluid", "val":1.0, 'args':[{'index':0}]}]}
+output[str(("movement", "NOUN"))]={"concepts":[{'name':'movement'}], "relations":[{"name":"group", "val":0.5, 'args':[{'index':0}]}, {"name":"moving", "val":0.5, 'args':[{'index':0}]}]}
+output[str(("motion", "NOUN"))]={"concepts":[{'name':'motion'}], "relations":[{"name":"group", "val":0.5, 'args':[{'index':0}]}, {"name":"moving", "val":0.5, 'args':[{'index':0}]}]}
+output[str(("action", "NOUN"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"action", "val":1.0, 'args':[{'index':0}]}]}
+output[str(("act", "NOUN"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"action", "val":1.0, 'args':[{'index':0}]}]}
+output[str(("building", "NOUN"))]={"concepts":[{'name':'building'}], "relations":[{"name":"body", "val":0.33, 'args':[{'index':0}]}, {"name":"location", "val":0.33, 'args':[{'index':0}]}, {"name":"building", "val":0.33, 'args':[{'index':0}]}]}
+output[str(("location", "NOUN"))]={"concepts":[{'name':'location'}], "relations":[{"name":"location", "val":1.0, 'args':[{'index':0}]}]}
+output[str(("place", "NOUN"))]={"concepts":[{'name':'place'}], "relations":[{"name":"location", "val":1.0, 'args':[{'index':0}]}]}
+output[str(("region", "NOUN"))]={"concepts":[{'name':'region'}], "relations":[{"name":"location", "val":1.0, 'args':[{'index':0}]}]}
+output[str(("area", "NOUN"))]={"concepts":[{'name':'area'}], "relations":[{"name":"location", "val":1.0, 'args':[{'index':0}]}]}
 
-mod_nouns = ['object, construction, location']
-mod_verbs = ['be', 'become']
+id_rank = -1
+def id():
+    global id_rank
+    id_rank += 1
+    return id_rank
 
-# TODO : Replace sentence by relation
 def preprocess_word(definition):
         # Language processing
         doc = nlp(definition)
         sentence = {}
         for token in doc:
             if token.pos_ in ['NOUN', 'ADJ']:
-                sentence[(token.lemma_, token.pos_)] = {'state':'undefined', 'main':True, 'args':[]}
+                sentence[(token.lemma_, token.pos_)] = {'state':'undefined', 'main':False, 'unready':0}
             elif token.pos_ == 'VERB':
-                sentence[(token.lemma_, token.pos_)] = {'state':'undefined', 'main':True, 'args':[]}
+                sentence[(token.lemma_, token.pos_)] = {'state':'undefined', 'main':False, 'unready':0}
         for token in doc:
             if token.pos_ in ['NOUN', 'ADJ', 'VERB']:
+                sentence[(token.lemma_, token.pos_)]['dep'] = token.dep_
+                sentence[(token.lemma_, token.pos_)]['chain'] = []
                 if token.dep_ != "ROOT":
                     search = True
                     stoken = token
                     while search:
                         if stoken.head.pos_ in ['NOUN', 'ADJ', "VERB"]:
-                            if token.dep_ == 'pobj':
-                                sentence[(stoken.head.lemma_, stoken.head.pos_)]['args'].append((token.lemma_, token.pos_, token.dep_, token.head.lemma_))
-                            else:
-                                sentence[(stoken.head.lemma_, stoken.head.pos_)]['args'].append((token.lemma_, token.pos_, token.dep_))
+                            sentence[(token.lemma_, token.pos_)]['shead'] = (stoken.head.lemma_, stoken.head.pos_)
+                            sentence[(stoken.head.lemma_, stoken.head.pos_)]['unready'] += 1
                             search = False
                         elif stoken.dep_ == 'ROOT':
+                            sentence[(token.lemma_, token.pos_)]['main'] = True
                             search = False
+                        else:
+                            sentence[(token.lemma_, token.pos_)]['chain'].append({'lemma':stoken.head.lemma_, 'dep':stoken.head.dep_})
                         stoken = stoken.head
-        return {"is":{}, "mods":{}, "args":[], "sentence":sentence}
-
-def preprocess_sentence(w, sentence):
-    word, pos = w
-    state = sentence[w]["state"]
-    args = sentence[w]['args']
-    if state == 'undefined':
-        sentence[w]['state'] = 'defining'
-        # Dealing with args
-        for i, arg in enumerate(args):
-            new_arg = (arg, deepcopy(preprocess_sentence((arg[0], arg[1]), sentence)))
-            args[i] = new_arg
-            sentence[(arg[0], arg[1])]['main'] = False
-    elif state == 'defining':
-        return {'state':'defining', "main":sentence[w]['main'], "args":{}} # TODO : to think, could just remove undefined args ?
-    sentence[w] = {'state':'defined', "main":sentence[w]['main'], "args":args}
-    return sentence[w]
-
-# Noun = mods
-# Adj = mods
-# Verb = mods -> as definition ! But different as use in sentence for others !
-
-def propagate_mods(w): # TODO, deal with dep
-    (wprop, wdict) = w
-    word, pos, args = wprop[0], wprop[1], wdict['args']
-    sword = str((word, pos))
-    if sword in output:
-        mods = deepcopy(output[sword]['mods']) # Equivalent of is
-        for arg in args:
-            (aprop, adict) = arg
-            aword, apos, adep = aprop[0], aprop[1], aprop[2]
-            if pos == 'NOUN':
-                if apos == 'ADJ': # Simple add mods
-                    for key,val in propagate_mods(arg).items():
-                        if key in mods:
-                            mods[key]['val'] += val['val'] # TODO, arg treatement ?
-                        else:
-                            mods[key] = deepcopy(val)
-                elif apos == 'NOUN': # Pass it as an argument to. TODO, works ! Improvement : Prepositions !
-                    for key,val in mods.items():
-                        if 'args' in val:
-                            if adep == 'pobj':
-                                aprep = aprop[3]
-                                if not aprep in [prop[3] for (prop, dic) in mods[key]['args'] if len(prop) > 3]:
-                                    mods[key]['args'].append(arg) # TODO, what happens if there is no available ?
-                elif apos == 'VERB': # TODO need to be defined
-                    pass
-            if pos == 'ADJ':
-                if apos == 'ADJ': # Simple add mods
-                    for key,val in propagate_mods(arg).items():
-                        if key in mods:
-                            mods[key]['val'] += val['val'] # TODO, arg treatement ?
-                        else:
-                            mods[key] = deepcopy(val)
-            if pos == 'VERB':
-                if apos == 'VERB':
-                    for key,val in mods.items():
-                        if 'args' in val:
-                            if 'args' in mods[key] and mods[key]["args"] == []:
-                                mods[key]['args'].append(arg) # TODO, what happens if there is no available ?
-                pass # TODO need to be defined
-        return mods
-    else:
-        return {}
+                else:
+                    sentence[(token.lemma_, token.pos_)]['main'] = True
+        return {"concepts":[], "relations":[], "fsentence":sentence}
 
 def compute(input_words, nb):
     words = input_words
@@ -180,95 +125,118 @@ def compute(input_words, nb):
         definition = words[w]
         if definition[0] == '(':
             definition = definition[definition.find(')') + 2:]
+        # Removing (s)
+        definition = definition.replace('(s)', '') # fix for the word 'furniture'
+        # Replacing ; by .
+        definition = definition.replace(';', '.') # fix for the word 'throw'
+        # Preprocessing
         if not (w in output):
             output[w] = preprocess_word(definition)
         else:
             print("Word already defined !", word, pos)
-    # Propagation
-    print("COMPUTE : Preprocess Sentence")
-    for w in words:
-        word, pos = eval(w)
-        out = output[w]
-        if 'sentence' in out:
-            # Init
-            sentence = out['sentence']
-            for w in sentence:
-                preprocess_sentence(w, sentence)
-            out['sentence'] = {k:v for k,v in sentence.items() if v['main']}
-            out['full_sentence'] = sentence
     print("COMPUTE : Propagation")
     for i in range(nb):
         print("COMPUTE :", i, "/", nb)
         for w in words:
             word, pos = eval(w)
             out = output[w]
-            if 'sentence' in out:
+            if 'fsentence' in out:
                 # Init
-                sentence = out['sentence']
-                out['mods'] = {}
-                # First propagate mods # TODO : args ?
-                for sentence_w in out['sentence'].items():
-                    sentence_pos = sentence_w[0][1]
-                    sentence_args = sentence_w[1]['args']
-                    if pos == sentence_pos:
-                        for key,val in propagate_mods(sentence_w).items():
-                            if key in out['mods']:
-                                out['mods'][key]['val'] += val['val']
-                            else:
-                                out['mods'][key] = deepcopy(val)
-                    else:
-                        if pos == 'NOUN':
-                            if sentence_pos == 'ADJ':
-                                # Check for mods
-                                for key,val in propagate_mods(sentence_w).items():
-                                    if key in out['mods']:
-                                        out['mods'][key]['val'] += val['val']
-                                    else:
-                                        out['mods'][key] = deepcopy(val)
-                                # Check for subj # TODO check if not because of aux ? Case : arthropod, insect
-                                for psubj in sentence_args:
-                                    psubj_dep = psubj[0][2]
-                                    if 'nsubj' in psubj_dep:
-                                        for key,val in propagate_mods(psubj).items():
-                                            if key in out['mods']:
-                                                out['mods'][key]['val'] += val['val']
-                                            else:
-                                                out['mods'][key] = deepcopy(val)
-                            elif sentence_pos == 'VERB':
-                                # Check for subj
-                                for psubj in sentence_args:
-                                    psubj_dep = psubj[0][2]
-                                    if 'nsubj' in psubj_dep:
-                                        for key,val in propagate_mods(psubj).items():
-                                            if key in out['mods']:
-                                                out['mods'][key]['val'] += val['val']
-                                            else:
-                                                out['mods'][key] = deepcopy(val)
-                # Normalize mods
-                sum_mods = sum([out['mods'][mod]['val'] for mod in out['mods']])
-                for mod in out['mods']:
-                    out['mods'][mod]['val'] /= sum_mods
+                out['sentence'] = deepcopy(out['fsentence'])
+                out['concepts'] = []
+                out['relations'] = []
+                if True: # TODO Maybe only for nouns ? Verbs and adj shouldn't have ?
+                    # First propagate
+                    for sw in out['sentence']:
+                        ssw = str(sw)
+                        if ssw in output:
+                            sout = output[ssw]
+                            out['sentence'][sw]['concepts'] = deepcopy(sout['concepts'])
+                            out['sentence'][sw]['relations'] = deepcopy(sout['relations'])
+                        else:
+                            out['sentence'][sw]['concepts'] = []
+                            out['sentence'][sw]['relations'] = []
+                        out['sentence'][sw]['addc'] = []
+                        out['sentence'][sw]['addr'] = []
+                    # Process sentence
+                    sentence_processing = True
+                    while sentence_processing:
+                        sentence_processing = False
+                        for sw in out['sentence']:
+                            sdict = out['sentence'][sw]
+                            if sdict['unready'] == 0:
+                                # Continue computation
+                                sentence_processing = True
+                                # Add addc, addr to self
+                                for c in sdict['addc']:
+                                    sdict['concepts'].append(c)
+                                    sdict['concepts'][-1]['is_arg'] = True
+                                    sdict['concepts'][-1]['index'] = len(sdict['concepts']) - 1 # TODO : useful for debug
+                                for r in sdict['addr']:
+                                    sdict['relations'].append(r)
+                                # Add self to shead addc, addr
+                                if not sdict['main']:
+                                    hdict = out['sentence'][sdict['shead']]
+                                    # Check if it can accept arg
+                                    can_arg = False
+                                    for hc in hdict['concepts']:
+                                        if 'args' in hc and (not 'is_arg' in hc or not hc['is_arg']):
+                                            can_arg = True
+                                            break
+                                    # If it can, add all concepts and relations
+                                    if can_arg:
+                                        offset = len(hdict['concepts'])
+                                        for c in sdict['concepts']: # TODO RESOLVE DEP (conj = synonym ?)
+                                            hdict['addc'].append(deepcopy(c))
+                                            hdict['addc'][-1]['index'] = len(hdict['addc']) - 1 # TODO : useful for debug
+                                            if 'args' in hdict['addc'][-1]:
+                                                for a in hdict['addc'][-1]['args']:
+                                                    a['index'] += offset
+                                            if not 'is_arg' in c or not c['is_arg']:
+                                                for hc in hdict['concepts']:
+                                                    if 'args' in hc and (not 'is_arg' in hc or not hc['is_arg']):
+                                                        hc['args'].append({'dep':sdict['dep'], 'chain':sdict['chain'], 'index':offset + len(hdict['addc']) - 1})
+                                        for r in sdict['relations']:
+                                            hdict['addr'].append(deepcopy(r))
+                                            for a in hdict['addr'][-1]['args']:
+                                                a['index'] += offset
+                                    hdict['unready'] -= 1
+                                sdict['unready'] -= 1
+                                # Big finish, add all concepts and relations if main
+                                if sdict['main']:
+                                    offset = len(out['concepts'])
+                                    for c in sdict['concepts']:
+                                        out['concepts'].append(c)
+                                        out['concepts'][-1]['index'] = len(out['concepts']) - 1 # TODO : useful for debug
+                                    for r in sdict['relations']:
+                                        out['relations'].append(r)
+                                        for a in out['relations'][-1]['args']:
+                                            a['index'] += offset
+                    # TODO PROCESS RELATIONS IF POSSIBLE (take examples)
+                    # Then normalize relations
+                    tot = sum([relation['val'] for relation in out['relations']])
+                    out['relations'] = [{'name':relation['name'], 'val':relation['val']/tot, 'args':relation['args']} for relation in out['relations']]
 
 # Test
-test = [str((w, 'NOUN')) for w in ['insect', 'wind']]
-testv = [str((w, 'VERB')) for w in ['burn', 'fly']]
+test = str(('throw', 'VERB'))
+definition = words[test].replace('(s)', '')
+doc = nlp(definition)
+print(test, definition)
+for token in doc:
+    print('WORD :', token.lemma_, token.pos_, token.dep_, 'HEAD :', token.head.lemma_, token.head.pos_, token.head.dep_)
 
 print("COMPUTE : Start")
-compute(words, 100)
+compute(words, 3)
 print("COMPUTE : End")
 
 print("CLEANING : Reformating output")
 for w in output:
     if 'sentence' in output[w]:
-        # Test
-        if w in test or w in testv:
-            print(output[w]['sentence'])
         # Clean sentence
+        #output[w]['fsentence'] = {str(t):output[w]['fsentence'][t] for t in output[w]['fsentence']}
+        output[w].pop('fsentence')
         #output[w]['sentence'] = {str(t):output[w]['sentence'][t] for t in output[w]['sentence']}
         output[w].pop('sentence')
-        # Clean full sentence
-        #output[w]['full_sentence'] = {str(t):output[w]['full_sentence'][t] for t in output[w]['full_sentence']}
-        output[w].pop('full_sentence')
 
 print("STORING : output.json")
 with open('output.json', 'w') as f:
