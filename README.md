@@ -26,11 +26,13 @@ The files you can find in this project :
 * **fetchdict.py** basically downloads recursively part of the wiktionary based on its part of speech (for now, I just get nouns, adjectives and verbs) and on their presence in a specific list. It is a simple script made using the great python module **wiktionaryparser**.
 * **propagate.py** defines a set of 'modifiers' and attach them to some words and finally propagate them in the whole dictionary. The propagation uses Natural Language Processing using the python module spaCy. The 'propagation' is kind of an iterative version of a graph search in order to have a better control on the depth of the search and because I think Python don't like so much recursivity.
 
-## REQUIREMENTS
+## Requirements
 
 If you want to run the python files, you will need **Python3**, **wikitionaryparser** and **spaCy**.
 
 ## Use
+
+This is an active work in progress, the master branch may not work always work properly. Carefull when running the following scripts, at the moment it is very unsafe and it may use all your memory, making your computer freeze. Run it at your own risks.
 
 ### Fetching the wiktionary
 
