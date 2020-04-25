@@ -51,7 +51,7 @@ python3 propagate.py
 This will read the words stored in the ***dict.json*** file.
 The result will be stored in ***output.json***.
 
-## TODO
+## Todo
 
 * To many things !
 
