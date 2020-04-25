@@ -28,7 +28,7 @@ The files you can find in this project :
 
 ## REQUIREMENTS
 
-If you want to run the python files, you will need Python3, wikitionaryparser and spaCy.
+If you want to run the python files, you will need **Python3**, **wikitionaryparser** and **spaCy**.
 
 ## Use
 
