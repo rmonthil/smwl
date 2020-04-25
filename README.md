@@ -55,6 +55,10 @@ The result will be stored in ***output.json***.
 
 * To many things !
 
+## Why the Godot project files are not here ?
+
+Most of the hardest work is here, then it is just about creating a game based on the generated database. Each game designer may want to create different games based on this. In my case, I am still not sure what I really want to do so, for now at least, the Godot project will stay private. When it will be finished, it might be open-source though.
+
 ## License
 
 This project is licensed under the Unlicense - see the [LICENSE](./LICENSE) file for details
