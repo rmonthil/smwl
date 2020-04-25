@@ -54,3 +54,7 @@ The result will be stored in ***output.json***.
 ## TODO
 
 * To many things !
+
+## License
+
+This project is licensed under the Unlicense - see the [LICENSE](./LICENSE) file for details
