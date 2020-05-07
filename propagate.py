@@ -121,6 +121,217 @@ def preprocess_word(definition):
                     sentence[(token.lemma_, token.pos_)]['main'] = True
         return {"concepts":[], "relations":[], "fsentence":sentence}
 
+def process_sentence(w):
+    out = output[w]
+    if 'fsentence' in out:
+        # Init
+        out['sentence'] = deepcopy(out['fsentence'])
+        out['concepts'] = []
+        out['relations'] = []
+        # First propagate
+        for sw in out['sentence']:
+            ssw = str(sw)
+            if ssw in output:
+                sout = output[ssw]
+                out['sentence'][sw]['concepts'] = deepcopy(sout['concepts'])
+                out['sentence'][sw]['relations'] = deepcopy(sout['relations'])
+            else:
+                out['sentence'][sw]['concepts'] = []
+                out['sentence'][sw]['relations'] = []
+            out['sentence'][sw]['addc'] = [] # add concepts : concepts added using the sentence
+            out['sentence'][sw]['addr'] = [] # add relations : relations added using the sentence
+        # Process sentence
+        sentence_processing = True
+        while sentence_processing:
+            sentence_processing = False
+            for sw in out['sentence']:
+                sdict = out['sentence'][sw]
+                if sdict['unready'] == 0:
+                    # Continue computation
+                    sentence_processing = True
+                    # Add addc, addr to self
+                    for c in sdict['addc']:
+                        sdict['concepts'].append(c)
+                        sdict['concepts'][-1]['is_arg'] = True
+                        sdict['concepts'][-1]['index'] = len(sdict['concepts']) - 1
+                    for r in sdict['addr']:
+                        sdict['relations'].append(r)
+                    # Add self to shead addc, addr
+                    if not sdict['main']:
+                        hdict = out['sentence'][sdict['shead']]
+                        # Check if it can accept arg
+                        can_arg = False
+                        for hc in hdict['concepts']:
+                            if 'args' in hc and (not 'is_arg' in hc or not hc['is_arg']):
+                                can_arg = True
+                                break
+                        # If it can, add all concepts and relations
+                        if can_arg:
+                            offset = len(hdict['concepts'])
+                            for c in sdict['concepts']: # TODO RESOLVE DEP (conj = synonym ?)
+                                hdict['addc'].append(deepcopy(c))
+                                hdict['addc'][-1]['index'] = len(hdict['addc']) - 1
+                                if 'args' in hdict['addc'][-1]:
+                                    for a in hdict['addc'][-1]['args']:
+                                        a['index'] += offset
+                                if not 'is_arg' in c or not c['is_arg']:
+                                    for hc in hdict['concepts']:
+                                        if 'args' in hc and (not 'is_arg' in hc or not hc['is_arg']):
+                                            hc['args'].append({'dep':sdict['dep'], 'chain':sdict['chain'], 'index':offset + len(hdict['addc']) - 1})
+                            for r in sdict['relations']:
+                                hdict['addr'].append(deepcopy(r))
+                                hdict['addr'][-1]['arg']['index'] += offset
+                        hdict['unready'] -= 1
+                    sdict['unready'] -= 1
+                    # Big finish, add all concepts and relations if main
+                    if sdict['main']:
+                        offset = len(out['concepts'])
+                        for c in sdict['concepts']:
+                            out['concepts'].append(deepcopy(c))
+                            out['concepts'][-1]['index'] = len(out['concepts']) - 1
+                            if 'args' in out['concepts'][-1]:
+                                for a in out['concepts'][-1]['args']:
+                                    a['index'] += offset
+                        for r in sdict['relations']:
+                            out['relations'].append(r)
+                            out['relations'][-1]['arg']['index'] += offset
+
+def transform_final(w):
+    out = output[w]
+    ## Concepts to fconcepts
+    fisargs = {}
+    fconcepts = {}
+    for c in out['concepts']:
+        index = 0
+        if 'index' in c:
+            index = c['index']
+        if index in fconcepts:
+            if c['name'] in fconcepts[index]:
+                fconcepts[index][c['name']] += 1.0 # hum should be + val TODO
+            else:
+                fconcepts[index][c['name']] = 1.0 # same TODO
+        else:
+            fconcepts[index] = {c['name']:1.0} # same TODO
+        #if 'is_arg' in c:
+        #    if c['is_arg']:
+        #        fisargs[index] = True
+    ## Concepts args to frelations
+    frelations = {}
+    for c in out['concepts']:
+        index = 0
+        if 'index' in c:
+            index = c['index']
+        frelations[index] = [a for a in c['args']]
+    ## Relations to fmods
+    fmods = {}
+    for r in out['relations']:
+        if r['arg']['index'] in fmods:
+            if r['name'] in fmods[r['arg']['index']]:
+                fmods[r['arg']['index']][r['name']] += r['val']
+            else:
+                fmods[r['arg']['index']][r['name']] = r['val']
+        else:
+            fmods[r['arg']['index']] = {r['name']:r['val']}
+    ## Recompute is_arg
+    for index in frelations:
+        for r in frelations[index]:
+            fisargs[r['index']] = True
+    ## Setup final
+    out['fmods'] = fmods
+    out['fconcepts'] = fconcepts
+    out['frelations'] = frelations
+    out['fisargs'] = fisargs
+
+def synonym(w, first, second):
+    out = output[w]
+    if first != second and second in out["fconcepts"] and first in out["fconcepts"]:
+        ## concepts
+        for fc in out["fconcepts"][second]:
+            if fc in out["fconcepts"][first]:
+                out["fconcepts"][first][fc] += out["fconcepts"][second][fc]
+            else:
+                out["fconcepts"][first][fc] = out["fconcepts"][second][fc]
+        ## mods
+        if second in out["fmods"]:
+            for mod in out["fmods"][second]:
+                if first in out["fmods"]:
+                    if mod in out["fmods"][first]:
+                        out["fmods"][first][mod] += out["fmods"][second][mod]
+                    else:
+                        out["fmods"][first][mod] = out["fmods"][second][mod]
+                else:
+                    out["fmods"][first] = {mod:out["fmods"][second][mod]}
+        ## relations
+        #### Update other indexs
+        for index in out["frelations"]:
+            for r in out["frelations"][index]:
+                if r["index"] == second:
+                    r["index"] = first
+        ### Update relation dealing with new synonyms
+        relations_first = deepcopy(out["frelations"][first])
+        relations_ids = [(r['dep'], r['chain']) for r in relations_first]
+        for r in out["frelations"][second]:
+            if not (r['dep'], r['chain']) in relations_ids:
+                out["frelations"][first].append(r)
+        for r in out["frelations"][second]:
+            if (r['dep'], r['chain']) in relations_ids:
+                synonym(w, relations_first[relations_ids.index((r['dep'], r['chain']))]['index'], r['index'])
+        ## pop
+        out["fmods"].pop(second, None)
+        out["fconcepts"].pop(second, None)
+        out["frelations"].pop(second, None)
+
+def normalization(w):
+    out = output[w]
+    for c in out["fconcepts"]:
+        tot = sum([out["fconcepts"][c][name] for name in out["fconcepts"][c]])
+        out["fconcepts"][c] = {name:out["fconcepts"][c][name]/tot for name in out["fconcepts"][c]}
+    for m in out["fmods"]:
+        tot = sum([out["fmods"][m][name] for name in out["fmods"][m]])
+        out["fmods"][m] = {name:out["fmods"][m][name]/tot for name in out["fmods"][m]}
+
+def back_to_sentence_processing(w):
+    out = output[w]
+    ## Back to concepts
+    out['concepts'] = []
+    for index in out["fconcepts"]:
+        name = max(out["fconcepts"][index], key=out["fconcepts"][index].get)
+        out['concepts'].append({"name":name, "index":index, "args":out["frelations"][index]})
+        if index in out["fisargs"]:
+            out['concepts'][-1]['is_arg'] = out["fisargs"][index]
+    out.pop('fisargs')
+    ## Back to relations
+    out['relations'] = []
+    for index in out["fmods"]:
+        for name in out["fmods"][index]:
+            out['relations'].append({"name":name, "val":out["fmods"][index][name], "arg":{"index":index}})
+
+def remove_concept(w, index):
+    out = output[w]
+    if index in out["fmods"]:
+        out["fmods"].pop(index)
+    out["fconcepts"].pop(index)
+    for i in range(len(out["frelations"][index])):
+        if out["frelations"][index][i] != None:
+            remove_relation(w, index, i)
+
+def remove_relation(w, index, i):
+    out = output[w]
+    if out["frelations"][index][i]["index"] in out["fconcepts"]:
+        remove_concept(w, out["frelations"][index][i]["index"])
+    out["frelations"][index][i] = None
+
+def clean_relations(w):
+    out = output[w]
+    pops = []
+    for index in out["frelations"]:
+        if index in out["fconcepts"]:
+            out["frelations"][index] = [a for a in out["frelations"][index] if a != None]
+        else:
+            pops.append(index)
+    for p in pops:
+        out["frelations"].pop(p)
+
 def compute(input_words, nb):
     words = input_words
     print("COMPUTE : Preprocess")
@@ -137,177 +348,74 @@ def compute(input_words, nb):
         if not (w in output):
             output[w] = preprocess_word(definition)
         else:
-            print("Word already defined !", word, pos)
+            print("Word already defined !", w)
     print("COMPUTE : Propagation")
     for i in range(nb):
         print("COMPUTE :", i, "/", nb)
         for w in words:
             word, pos = eval(w)
             out = output[w]
-            if 'fsentence' in out:
-                # Init
-                out['sentence'] = deepcopy(out['fsentence'])
-                out['concepts'] = []
-                out['relations'] = []
-                if True: # TODO Maybe only for nouns ? Verbs and adj shouldn't have ?
-                    # First propagate
-                    for sw in out['sentence']:
-                        ssw = str(sw)
-                        if ssw in output:
-                            sout = output[ssw]
-                            out['sentence'][sw]['concepts'] = deepcopy(sout['concepts'])
-                            out['sentence'][sw]['relations'] = deepcopy(sout['relations'])
-                        else:
-                            out['sentence'][sw]['concepts'] = []
-                            out['sentence'][sw]['relations'] = []
-                        out['sentence'][sw]['addc'] = [] # add concepts : concepts added using the sentence
-                        out['sentence'][sw]['addr'] = [] # add relations : relations added using the sentence
-                    # Process sentence
-                    sentence_processing = True
-                    while sentence_processing:
-                        sentence_processing = False
-                        for sw in out['sentence']:
-                            sdict = out['sentence'][sw]
-                            if sdict['unready'] == 0:
-                                # Continue computation
-                                sentence_processing = True
-                                # Add addc, addr to self
-                                for c in sdict['addc']:
-                                    sdict['concepts'].append(c)
-                                    sdict['concepts'][-1]['is_arg'] = True
-                                    sdict['concepts'][-1]['index'] = len(sdict['concepts']) - 1 # TODO : useful for debug
-                                for r in sdict['addr']:
-                                    sdict['relations'].append(r)
-                                # Add self to shead addc, addr
-                                if not sdict['main']:
-                                    hdict = out['sentence'][sdict['shead']]
-                                    # Check if it can accept arg
-                                    can_arg = False
-                                    for hc in hdict['concepts']:
-                                        if 'args' in hc and (not 'is_arg' in hc or not hc['is_arg']):
-                                            can_arg = True
-                                            break
-                                    # If it can, add all concepts and relations
-                                    if can_arg:
-                                        offset = len(hdict['concepts'])
-                                        for c in sdict['concepts']: # TODO RESOLVE DEP (conj = synonym ?)
-                                            hdict['addc'].append(deepcopy(c))
-                                            hdict['addc'][-1]['index'] = len(hdict['addc']) - 1 # TODO : useful for debug
-                                            if 'args' in hdict['addc'][-1]:
-                                                for a in hdict['addc'][-1]['args']:
-                                                    a['index'] += offset
-                                            if not 'is_arg' in c or not c['is_arg']:
-                                                for hc in hdict['concepts']:
-                                                    if 'args' in hc and (not 'is_arg' in hc or not hc['is_arg']):
-                                                        hc['args'].append({'dep':sdict['dep'], 'chain':sdict['chain'], 'index':offset + len(hdict['addc']) - 1})
-                                        for r in sdict['relations']:
-                                            hdict['addr'].append(deepcopy(r))
-                                            hdict['addr'][-1]['arg']['index'] += offset
-                                    hdict['unready'] -= 1
-                                sdict['unready'] -= 1
-                                # Big finish, add all concepts and relations if main
-                                if sdict['main']:
-                                    offset = len(out['concepts'])
-                                    for c in sdict['concepts']:
-                                        out['concepts'].append(deepcopy(c))
-                                        out['concepts'][-1]['index'] = len(out['concepts']) - 1 # TODO : useful for debug
-                                        if 'args' in out['concepts'][-1]:
-                                            for a in out['concepts'][-1]['args']:
-                                                a['index'] += offset
-                                    for r in sdict['relations']:
-                                        out['relations'].append(r)
-                                        out['relations'][-1]['arg']['index'] += offset
-                    ## Concepts to fconcepts
-                    fisargs = {}
-                    fconcepts = {}
-                    for c in out['concepts']:
-                        if c['index'] in fconcepts:
-                            if c['name'] in fconcepts[c['index']]:
-                                fconcepts[c['index']][c['name']] += 1.0 # hum should be + val TODO
-                            else:
-                                fconcepts[c['index']][c['name']] = 1.0 # same TODO
-                        else:
-                            fconcepts[c['index']] = {c['name']:1.0} # same TODO
-                        if 'is_arg' in c:
-                            if c['is_arg']:
-                                fisargs[c['index']] = True
-                    ## Concepts args to frelations
-                    frelations = {}
-                    for c in out['concepts']:
-                        frelations[c['index']] = [a for a in c['args']]
-                    ## Relations to fmods
-                    fmods = {}
-                    for r in out['relations']:
-                        if r['arg']['index'] in fmods:
-                            if r['name'] in fmods[r['arg']['index']]:
-                                fmods[r['arg']['index']][r['name']] += r['val']
-                            else:
-                                fmods[r['arg']['index']][r['name']] = r['val']
-                        else:
-                            fmods[r['arg']['index']] = {r['name']:r['val']}
-                    ## Synonym management TODO refine, it's not that simple, not all mains are synonyms
-                    synonyms = []
-                    for i in range(1, len(out['concepts'])):
-                        c = out['concepts'][i]
-                        # if main concept then synonym of index = 0
-                        if not 'is_arg' in c or not c['is_arg']:
-                            synonyms.append((0, c['index']))
-                    for (first, second) in synonyms:
-                        if first in fconcepts and second in fconcepts: # Strange that this is needed ! TODO remove
-                            # concepts
-                            for fc in fconcepts[second]:
-                                if fc in fconcepts[first]:
-                                    fconcepts[first][fc] += fconcepts[second][fc]
-                                else:
-                                    fconcepts[first][fc] = fconcepts[second][fc]
-                            # mods
-                            if second in fmods:
-                                for mod in fmods[second]:
-                                    if first in fmods:
-                                        if mod in fmods[first]:
-                                            fmods[first][mod] += fmods[second][mod]
-                                        else:
-                                            fmods[first][mod] = fmods[second][mod]
+            ## Process sentence
+            process_sentence(w)
+            ## Transform to final state
+            transform_final(w)
+            ## Synonym management
+            if pos == 'VERB' or pos == 'ADJ':
+                for index in list(out['fconcepts'].keys()):
+                    if index != 0 and (not index in out['fisargs'] or not out['fisargs'][index]):
+                        synonym(w, 0, index)
+            ## TODO Process relations, dep treatement, amod, verbs and compress data !!!
+            for index in out['frelations']:
+                if index in out['fconcepts']:
+                    name = max(out['fconcepts'][index], key=out['fconcepts'][index].get) # TODO use this !
+                    for i in range(len(out['frelations'][index])):
+                        r = out['frelations'][index][i]
+                        treated = False
+                        if r != None:
+                            if r['index'] in out['fconcepts']:
+                                if r['dep'] == 'amod':
+                                    # Treat
+                                    treated = True
+                                    amod_index = r['index']
+                                    amod_name = max(out['fconcepts'][amod_index], key=out['fconcepts'][amod_index].get)
+                                    ## if is action (mostly verb)
+                                    if name == 'action': # TODO depend of action ?
+                                        remove_relation(w, index, i)
+                                    ## if is else (mostly nouns and adjs)
                                     else:
-                                        fmods[first] = {mod:fmods[second][mod]}
-                            # relations
-                            tmp = [(r['dep'], r['chain']) for r in frelations[first]]
-                            for r in frelations[second]:
-                                if (r['dep'], r['chain']) in tmp:
-                                    synonyms.append((frelations[first][tmp.index((r['dep'], r['chain']))]['index'], r['index']))
-                                else:
-                                    frelations[first].append(r)
-                            # pop
-                            fmods.pop(second, None)
-                            fconcepts.pop(second, None)
-                            frelations.pop(second, None)
-                    ## TODO Process relations, dep treatement, amod, verbs and compress data !!!
-                    # Example bird
-                    ## Normalize concepts and mods
-                    for fc in fconcepts:
-                        tot = sum([fconcepts[fc][name] for name in fconcepts[fc]])
-                        fconcepts[fc] = {name:fconcepts[fc][name]/tot for name in fconcepts[fc]}
-                    for m in fmods:
-                        tot = sum([fmods[m][name] for name in fmods[m]])
-                        fmods[m] = {name:fmods[m][name]/tot for name in fmods[m]}
-                    ## Setup final
-                    out['fmods'] = fmods
-                    out['fconcepts'] = fconcepts
-                    out['frelations'] = frelations
-                    out['synonyms'] = synonyms
-                    ## Back to concepts
-                    out['concepts'] = []
-                    for index in fconcepts:
-                        name = list(fconcepts[index].keys())[0]
-                        out['concepts'].append({"name":name, "index":index, "args":frelations[index]})
-                    for index in fisargs:
-                        if index < len(out['concepts']):
-                            out['concepts'][index]['is_arg'] = True
-                    ## Back to relations
-                    out['relations'] = []
-                    for index in fmods:
-                        for name in fmods[index]:
-                            out['relations'].append({"name":name, "val":fmods[index][name], "arg":{"index":index}})
+                                        ## if amod is a adj (mostly adjectives)
+                                        if amod_name == 'adj':
+                                            ## Share mods TODO code refactoring
+                                            if amod_index in out["fmods"]:
+                                                for mod in out["fmods"][amod_index]:
+                                                    if index in out["fmods"]:
+                                                        if mod in out["fmods"][index]:
+                                                            out["fmods"][index][mod] += out["fmods"][amod_index][mod]
+                                                        else:
+                                                            out["fmods"][index][mod] = out["fmods"][amod_index][mod]
+                                                    else:
+                                                        out["fmods"][index] = {mod:out["fmods"][amod_index][mod]}
+                                            # And remove relation
+                                            remove_relation(w, index, i)
+                                        # if amod is a action (mostly verbs)
+                                        elif amod_name == 'action': # TODO depend of mods
+                                            remove_relation(w, index, i)
+                                        # if amod is an other concept (mostly nouns)
+                                        else: # TODO depend of mods
+                                            remove_relation(w, index, i)
+                            else:
+                                treated = True
+                                remove_relation(w, index, i)
+                        else:
+                            treated = True
+                        if not treated:
+                            remove_relation(w, index, i)
+            clean_relations(w)
+            ## Normalize concepts and mods
+            normalization(w)
+            ## Back to "normal"
+            back_to_sentence_processing(w)
+
 # Test
 test = str(('throw', 'VERB'))
 definition = words[test].replace('(s)', '')
@@ -317,14 +425,13 @@ for token in doc:
     print('WORD :', token.lemma_, token.pos_, token.dep_, 'HEAD :', token.head.lemma_, token.head.pos_, token.head.dep_)
 
 print("COMPUTE : Start")
-compute(words, 3)
+compute(words, 5)
 print("COMPUTE : End")
 
 print("CLEANING : Reformating output")
 for w in output:
     if 'sentence' in output[w]:
         # Clean sentence
-        output[w].pop('synonyms')
         #output[w]['fsentence'] = {str(t):output[w]['fsentence'][t] for t in output[w]['fsentence']}
         output[w].pop('fsentence')
         #output[w]['sentence'] = {str(t):output[w]['sentence'][t] for t in output[w]['sentence']}
