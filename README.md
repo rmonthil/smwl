@@ -53,7 +53,7 @@ The result will be stored in ***output.json***.
 
 ## Todo
 
-* To many things !
+* Rewrite completely **propagate.py**
 
 ## Why the Godot project files are not here ?
 
