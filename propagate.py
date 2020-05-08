@@ -273,7 +273,7 @@ def synonym(w, first, second):
         for r in out["frelations"][second]:
             if not (r['dep'], r['chain']) in relations_ids:
                 out["frelations"][first].append(r)
-        for r in out["frelations"][second]:
+        for r in out["frelations"][second]: # TODO, should be always !
             if (r['dep'], r['chain']) in relations_ids:
                 synonym(w, relations_first[relations_ids.index((r['dep'], r['chain']))]['index'], r['index'])
         ## pop
@@ -323,6 +323,7 @@ def remove_relation(w, index, i):
 
 def clean_relations(w):
     out = output[w]
+    # Clean relations
     pops = []
     for index in out["frelations"]:
         if index in out["fconcepts"]:
@@ -331,6 +332,13 @@ def clean_relations(w):
             pops.append(index)
     for p in pops:
         out["frelations"].pop(p)
+    # Clean mods also
+    pops = []
+    for index in out["fmods"]:
+        if not index in out["fconcepts"]:
+            pops.append(index)
+    for p in pops:
+        out["fmods"].pop(p)
 
 def compute(input_words, nb):
     words = input_words
@@ -373,16 +381,37 @@ def compute(input_words, nb):
                         treated = False
                         if r != None:
                             if r['index'] in out['fconcepts']:
-                                if r['dep'] == 'amod':
-                                    # Treat
+                                if name == 'action':
                                     treated = True
-                                    amod_index = r['index']
-                                    amod_name = max(out['fconcepts'][amod_index], key=out['fconcepts'][amod_index].get)
-                                    ## if is action (mostly verb)
-                                    if name == 'action': # TODO depend of action ?
-                                        remove_relation(w, index, i)
-                                    ## if is else (mostly nouns and adjs)
+                                    if r['dep'] == 'nsubj' and r['chain'] == []:
+                                        nsubj_index = r['index']
+                                        nsubj_name = max(out['fconcepts'][nsubj_index], key=out['fconcepts'][nsubj_index].get)
+                                        if nsubj_name != 'action' and 'adj':
+                                            pass
+                                        else:
+                                            remove_relation(w, index, i)
+                                    elif r['dep'] == 'nsubjpass' and r['chain'] == []:
+                                        nsubjpass_index = r['index']
+                                        nsubjpass_name = max(out['fconcepts'][nsubjpass_index], key=out['fconcepts'][nsubjpass_index].get)
+                                        if nsubjpass_name != 'action' and 'adj':
+                                            pass
+                                        else:
+                                            remove_relation(w, index, i)
+                                    elif r['dep'] == 'dobj' and r['chain'] == []:
+                                        dobj_index = r['index']
+                                        dobj_name = max(out['fconcepts'][dobj_index], key=out['fconcepts'][dobj_index].get)
+                                        if dobj_name != 'action' and 'adj':
+                                            pass
+                                        else:
+                                            remove_relation(w, index, i)
                                     else:
+                                        remove_relation(w, index, i)
+                                else:
+                                    if r['dep'] == 'amod':
+                                        # Treat
+                                        treated = True
+                                        amod_index = r['index']
+                                        amod_name = max(out['fconcepts'][amod_index], key=out['fconcepts'][amod_index].get)
                                         ## if amod is a adj (mostly adjectives)
                                         if amod_name == 'adj':
                                             ## Share mods TODO code refactoring
@@ -425,7 +454,7 @@ for token in doc:
     print('WORD :', token.lemma_, token.pos_, token.dep_, 'HEAD :', token.head.lemma_, token.head.pos_, token.head.dep_)
 
 print("COMPUTE : Start")
-compute(words, 5)
+compute(words, 3)
 print("COMPUTE : End")
 
 print("CLEANING : Reformating output")
@@ -436,9 +465,9 @@ for w in output:
         output[w].pop('fsentence')
         #output[w]['sentence'] = {str(t):output[w]['sentence'][t] for t in output[w]['sentence']}
         output[w].pop('sentence')
-        # Clean old
-        output[w].pop('concepts')
-        output[w].pop('relations')
+    # Clean old
+    output[w].pop('concepts')
+    output[w].pop('relations')
 
 print("STORING : output.json")
 with open('output.json', 'w') as f:
