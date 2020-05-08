@@ -468,6 +468,14 @@ for w in output:
     # Clean old
     output[w].pop('concepts')
     output[w].pop('relations')
+    # Rename
+    if 'fconcepts' in output[w]:
+        output[w]['concepts'] = output[w]['fconcepts']
+        output[w].pop('fconcepts')
+        output[w]['relations'] = output[w]['frelations']
+        output[w].pop('frelations')
+        output[w]['mods'] = output[w]['fmods']
+        output[w].pop('fmods')
 
 print("STORING : output.json")
 with open('output.json', 'w') as f:
