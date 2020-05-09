@@ -32,6 +32,7 @@ output[str(("group", "ADJ"))]={"concepts":[{'name':'adj', 'args':[]}], "relation
 output[str(("plural", "ADJ"))]={"concepts":[{'name':'adj', 'args':[]}], "relations":[{"name":"group", "val":1.0, 'arg':{'index':0}}]}
 output[str(("moving", "ADJ"))]={"concepts":[{'name':'adj', 'args':[]}], "relations":[{"name":"moving", "val":1.0, 'arg':{'index':0}}]}
 output[str(("solid", "ADJ"))]={"concepts":[{'name':'adj', 'args':[]}], "relations":[{"name":"solid", "val":1.0, 'arg':{'index':0}}]}
+output[str(("exit", "ADJ"))]={"concepts":[{'name':'adj', 'args':[]}], "relations":[{"name":"exit", "val":1.0, 'arg':{'index':0}}]}
 
 # Verbs
 output[str(("cause", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"cause", "val":1.0, 'arg':{'index':0}}]} # Can have an other relation as an argument ?
@@ -51,6 +52,8 @@ output[str(("hit", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relati
 output[str(("create", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"create", "val":1.0, 'arg':{'index':0}}]}
 output[str(("build", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"create", "val":1.0, 'arg':{'index':0}}]}
 output[str(("produce", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"create", "val":1.0, 'arg':{'index':0}}]}
+output[str(("enter", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"enter", "val":1.0, 'arg':{'index':0}}]}
+output[str(("exit", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"exit", "val":1.0, 'arg':{'index':0}}]}
 
 # Nouns
 output[str(("member", "NOUN"))]={"concepts":[{'name':'member', 'args':[]}], "relations":[{"name":"being", "val":1.0, 'arg':{'index':0}}]}
@@ -78,11 +81,12 @@ output[str(("movement", "NOUN"))]={"concepts":[{'name':'movement', 'args':[]}], 
 output[str(("motion", "NOUN"))]={"concepts":[{'name':'motion', 'args':[]}], "relations":[{"name":"group", "val":0.5, 'arg':{'index':0}}, {"name":"moving", "val":0.5, 'arg':{'index':0}}]}
 output[str(("action", "NOUN"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"action", "val":1.0, 'arg':{'index':0}}]}
 output[str(("act", "NOUN"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"action", "val":1.0, 'arg':{'index':0}}]}
-output[str(("building", "NOUN"))]={"concepts":[{'name':'building', 'args':[]}], "relations":[{"name":"body", "val":0.33, 'arg':{'index':0}}, {"name":"location", "val":0.33, 'arg':{'index':0}}, {"name":"building", "val":0.33, 'arg':{'index':0}}]}
+output[str(("building", "NOUN"))]={"concepts":[{'name':'building', 'args':[]}], "relations":[{"name":"body", "val":0.33, 'arg':{'index':0}}, {"name":"location", "val":0.33, 'arg':{'index':0}}, {"name":"static", "val":0.33, 'arg':{'index':0}}]}
 output[str(("location", "NOUN"))]={"concepts":[{'name':'location', 'args':[]}], "relations":[{"name":"location", "val":1.0, 'arg':{'index':0}}]}
 output[str(("place", "NOUN"))]={"concepts":[{'name':'place', 'args':[]}], "relations":[{"name":"location", "val":1.0, 'arg':{'index':0}}]}
 output[str(("region", "NOUN"))]={"concepts":[{'name':'region', 'args':[]}], "relations":[{"name":"location", "val":1.0, 'arg':{'index':0}}]}
 output[str(("area", "NOUN"))]={"concepts":[{'name':'area', 'args':[]}], "relations":[{"name":"location", "val":1.0, 'arg':{'index':0}}]}
+output[str(("exit", "NOUN"))]={"concepts":[{'name':'exit', 'args':[]}], "relations":[{"name":"exit", "val":1.0, 'arg':{'index':0}}]}
 
 id_rank = -1
 def id():
@@ -344,16 +348,16 @@ def compute(input_words, nb):
     words = input_words
     print("COMPUTE : Preprocess")
     for w in words:
-        word, pos = eval(w)
-        definition = words[w]
-        if definition[0] == '(':
-            definition = definition[definition.find(')') + 2:]
-        # Removing (s)
-        definition = definition.replace('(s)', '') # fix for the word 'furniture'
-        # Replacing ; by .
-        definition = definition.replace(';', '.') # fix for the word 'throw'
-        # Preprocessing
         if not (w in output):
+            word, pos = eval(w)
+            definition = words[w]
+            if definition[0] == '(':
+                definition = definition[definition.find(')') + 2:]
+            # Removing (s)
+            definition = definition.replace('(s)', '') # fix for the word 'furniture'
+            # Replacing ; by .
+            definition = definition.replace(';', '.') # fix for the word 'throw'
+            # Preprocessing
             output[w] = preprocess_word(definition)
         else:
             print("Word already defined !", w)
@@ -386,21 +390,21 @@ def compute(input_words, nb):
                                     if r['dep'] == 'nsubj' and r['chain'] == []:
                                         nsubj_index = r['index']
                                         nsubj_name = max(out['fconcepts'][nsubj_index], key=out['fconcepts'][nsubj_index].get)
-                                        if nsubj_name != 'action' and 'adj':
+                                        if nsubj_name != 'action' and nsubj_name != 'adj':
                                             pass
                                         else:
                                             remove_relation(w, index, i)
                                     elif r['dep'] == 'nsubjpass' and r['chain'] == []:
                                         nsubjpass_index = r['index']
                                         nsubjpass_name = max(out['fconcepts'][nsubjpass_index], key=out['fconcepts'][nsubjpass_index].get)
-                                        if nsubjpass_name != 'action' and 'adj':
+                                        if nsubjpass_name != 'action' and nsubjpass_name != 'adj':
                                             pass
                                         else:
                                             remove_relation(w, index, i)
                                     elif r['dep'] == 'dobj' and r['chain'] == []:
                                         dobj_index = r['index']
                                         dobj_name = max(out['fconcepts'][dobj_index], key=out['fconcepts'][dobj_index].get)
-                                        if dobj_name != 'action' and 'adj':
+                                        if dobj_name != 'action' and dobj_name != 'adj':
                                             pass
                                         else:
                                             remove_relation(w, index, i)

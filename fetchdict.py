@@ -69,6 +69,12 @@ words_to_fetch = [
         ("jungle", "NOUN"),
         ("ghost", "NOUN"),
         ("vampire", "NOUN"),
+        ("burning", "ADJ"),
+        ("static", "ADJ"),
+        ("vegetal", "ADJ"),
+        ("exit", "ADJ"),
+        ("exit", "NOUN"),
+        ("exit", "VERB"),
         ]
 out_dict = {}
 

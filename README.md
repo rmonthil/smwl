@@ -54,6 +54,8 @@ The result will be stored in ***output.json***.
 ## Todo
 
 * Rewrite completely **propagate.py**
+* A used verb (or action) becomes a relation, or a mod !
+* Distinction between relation and interaction ?
 
 ## Why the Godot project files are not here ?
 
