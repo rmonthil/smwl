@@ -224,8 +224,8 @@ def process_relations(w):
     out = output[w]
     # Loop on concepts
     for concept_index in out['concepts']:
-        # Get the concept name
-        concept_name = max(out['concepts'][concept_index], key=out['concepts'][concept_index].get)
+        # Get the concept type
+        concept_type = max(out['concepts'][concept_index]['type'], key=out['concepts'][concept_index]['type'].get)
         # Loop in relation of this specific concept, using iterator in order to use the remove_relation function
         for i in range(len(out['relations'][concept_index])):
             relation_i = out['relations'][concept_index][i]
@@ -233,7 +233,7 @@ def process_relations(w):
             relation_dep = relation_i['dep']
             relation_chain = relation_i['chain']
             relation_concept_index = relation_i['index']
-            relation_concept_name = max(out['fconcepts'][nsubj_index], key=out['fconcepts'][nsubj_index].get)
+            relation_concept_type = max(out['fconcepts'][relation_concept_index]['type'], key=out['fconcepts'][relation_concept_index]['type'].get)
             # If concept has a subject then concept is used
             if relation_dep == 'nsubj' or relation_dep == 'nsubjpass':
                 out['concepts'][concept_index]['used'] = True
