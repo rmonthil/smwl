@@ -19,7 +19,6 @@ output = {}
 print("INPUT : Defining some words")
 # Adjs
 output[str(("vegetal", "ADJ"))]={"concepts":{0:{'name':'vegetal', 'type':{'adj':1.0}, 'used':False}}, "mods":{0:{"vegetal":1.0}}, "relations":{0:[]}} # + sentence relations
-#output[str(("vegetal", "ADJ"))]={"concepts":[{'name':'adj', 'args':[]}], "relations":[{"name":"vegetal", "val":1.0, 'arg':{'index':0}}]}
 #output[str(("body", "ADJ"))]={"concepts":[{'name':'adj', 'args':[]}], "relations":[{"name":"body", "val":1.0, 'arg':{'index':0}}]}
 #output[str(("static", "ADJ"))]={"concepts":[{'name':'adj', 'args':[]}], "relations":[{"name":"static", "val":1.0, 'arg':{'index':0}}]}
 #output[str(("burning", "ADJ"))]={"concepts":[{'name':'adj', 'args':[]}], "relations":[{"name":"burning", "val":1.0, 'arg':{'index':0}}]}
@@ -37,10 +36,12 @@ output[str(("vegetal", "ADJ"))]={"concepts":{0:{'name':'vegetal', 'type':{'adj':
 
 # Verbs
 output[str(("cause", "VERB"))]={"concepts":{0:{'name':'cause', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"cause":1.0}}, "relations":{0:[]}} # + sentence relations
-#output[str(("have", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"have", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("grab", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"have", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("take", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"have", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("hold", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"have", "val":1.0, 'arg':{'index':0}}]}
+output[str(("have", "VERB"))]={"concepts":{0:{'name':'have', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"have":1.0}}, "relations":{0:[]}} # + sentence relations
+output[str(("grab", "VERB"))]={"concepts":{0:{'name':'grab', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"have":1.0}}, "relations":{0:[]}} # + sentence relations
+output[str(("take", "VERB"))]={"concepts":{0:{'name':'take', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"have":1.0}}, "relations":{0:[]}} # + sentence relations
+output[str(("hold", "VERB"))]={"concepts":{0:{'name':'hold', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"have":1.0}}, "relations":{0:[]}} # + sentence relations
+output[str(("drop", "VERB"))]={"concepts":{0:{'name':'drop', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"drop":1.0}}, "relations":{0:[]}} # + sentence relations
+output[str(("release", "VERB"))]={"concepts":{0:{'name':'release', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"drop":1.0}}, "relations":{0:[]}} # + sentence relations
 #output[str(("be", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"be", "val":1.0, 'arg':{'index':0}}]}
 #output[str(("move", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"move", "val":1.0, 'arg':{'index':0}}]}
 #output[str(("use", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"use", "val":1.0, 'arg':{'index':0}}]}
@@ -48,7 +49,6 @@ output[str(("cause", "VERB"))]={"concepts":{0:{'name':'cause', 'type':{'action':
 #output[str(("consume", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"consume", "val":1.0, 'arg':{'index':0}}]}
 #output[str(("attack", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"hit", "val":1.0, 'arg':{'index':0}}]}
 #output[str(("turn", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"turn", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("drop", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"drop", "val":1.0, 'arg':{'index':0}}]}
 #output[str(("hit", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"hit", "val":1.0, 'arg':{'index':0}}]}
 #output[str(("create", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"create", "val":1.0, 'arg':{'index':0}}]}
 #output[str(("build", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"create", "val":1.0, 'arg':{'index':0}}]}
@@ -57,11 +57,11 @@ output[str(("cause", "VERB"))]={"concepts":{0:{'name':'cause', 'type':{'action':
 #output[str(("exit", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"exit", "val":1.0, 'arg':{'index':0}}]}
 
 # Nouns
-output[str(("member", "NOUN"))]={"concepts":{0:{'name':'member', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"being":1.0}}, "relations":{0:[]}} # + sentence relations
+output[str(("member", "NOUN"))]={"concepts":{0:{'name':'member', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"being":1.0}}, "relations":{0:[]}}
+output[str(("plant", "NOUN"))]={"concepts":{0:{'name':'plant', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"vegetal":0.33, "body":0.33, "static":0.33}}, "relations":{0:[]}} # + sentence relations
+output[str(("body", "NOUN"))]={"concepts":{0:{'name':'body', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"body":1.0}}, "relations":{0:[]}}
+output[str(("item", "NOUN"))]={"concepts":{0:{'name':'item', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"body":1.0}}, "relations":{0:[]}}
 #output[str(("object", "NOUN"))]={"concepts":[{'name':'object', 'args':[]}], "relations":[{"name":"object", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("plant", "NOUN"))]={"concepts":[{'name':'plant', 'args':[]}], "relations":[{"name":"vegetal", "val":0.33, 'arg':{'index':0}}, {"name":"body", "val":0.33, 'arg':{'index':0}}, {"name":"static", "val":0.33, 'arg':{'index':0}}]}
-#output[str(("body", "NOUN"))]={"concepts":[{'name':'body', 'args':[]}], "relations":[{"name":"body", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("item", "NOUN"))]={"concepts":[{'name':'item', 'args':[]}], "relations":[{"name":"body", "val":1.0, 'arg':{'index':0}}]}
 #output[str(("fire", "NOUN"))]={"concepts":[{'name':'fire', 'args':[]}], "relations":[{"name":"burning", "val":1.0, 'arg':{'index':0}}]}
 #output[str(("fluid", "NOUN"))]={"concepts":[{'name':'fluid', 'args':[]}], "relations":[{"name":"fluid", "val":1.0, 'arg':{'index':0}}]}
 #output[str(("liquid", "NOUN"))]={"concepts":[{'name':'liquid', 'args':[]}], "relations":[{"name":"fluid", "val":1.0, 'arg':{'index':0}}]}
