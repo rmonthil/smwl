@@ -185,6 +185,9 @@ def process_sentence(w):
                             r['index'] += i
                     # If is not main
                     if not sdict['main']:
+                        # Relation processing, TODO factorize
+                        for i in sdict['concepts']:
+                            sdict['concepts'][i]['used'] = True
                         # Add self to shead addc, addr
                         hdict = out['phrase'][sdict['shead']]
                         # Find addi
@@ -211,9 +214,10 @@ def process_sentence(w):
                     if sdict['main']:
                         # Relation processing, TODO factorize
                         for i in sdict['concepts']:
-                            for relation in out['relations'][i]:
+                            for relation in sdict['relations'][i]:
                                 if relation["dep"] == 'nsubj' or relation["dep"] == 'nsubjpass':
                                     sdict['concepts'][i]['used'] = True
+                                    sdict['concepts'][relation['index']]['used'] = False
                                 else:
                                     sdict['concepts'][relation['index']]['used'] = True
                         # Check dependance
