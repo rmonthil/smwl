@@ -183,8 +183,9 @@ def process_sentence(w):
                         sdict['relations'][i + addi] = deepcopy(sdict['addr'][addi])
                         for r in sdict['relations'][i + addi]:
                             r['index'] += i
-                    # Add self to shead addc, addr
+                    # If is not main
                     if not sdict['main']:
+                        # Add self to shead addc, addr
                         hdict = out['phrase'][sdict['shead']]
                         # Find addi
                         addi = get_next_key(hdict['addc'])
@@ -206,8 +207,17 @@ def process_sentence(w):
                                         hdict['relations'][j].append({'dep':sdict['dep'], 'chain':sdict['chain'], 'index':hi + addi + i})
                         hdict['unready'] -= 1
                     sdict['unready'] -= 1
-                    # Big finish, add all concepts and relations if main
+                    # If is main
                     if sdict['main']:
+                        # Relation processing, TODO factorize
+                        for i in sdict['concepts']:
+                            for relation in out['relations'][i]:
+                                if relation["dep"] == 'nsubj' or relation["dep"] == 'nsubjpass':
+                                    sdict['concepts'][i]['used'] = True
+                                else:
+                                    sdict['concepts'][relation['index']]['used'] = True
+                        # Check dependance
+                        # Add self out
                         # Find i
                         i = get_next_key(out['concepts'])
                         # Construct out
@@ -267,7 +277,7 @@ def compute(input_words, nb):
             ## Process sentence
             process_sentence(w)
             ## Process relations
-            process_relations(w)
+            #process_relations(w)
             ## Process synonyms TODO
 
 ## Test
