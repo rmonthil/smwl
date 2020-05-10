@@ -233,7 +233,7 @@ def process_relations(w):
             relation_dep = relation_i['dep']
             relation_chain = relation_i['chain']
             relation_concept_index = relation_i['index']
-            relation_concept_type = max(out['fconcepts'][relation_concept_index]['type'], key=out['fconcepts'][relation_concept_index]['type'].get)
+            relation_concept_type = max(out['concepts'][relation_concept_index]['type'], key=out['concepts'][relation_concept_index]['type'].get)
             # If concept has a subject then concept is used
             if relation_dep == 'nsubj' or relation_dep == 'nsubjpass':
                 out['concepts'][concept_index]['used'] = True
