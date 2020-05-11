@@ -19,75 +19,78 @@ output = {}
 print("INPUT : Defining some words")
 # Adjs
 output[str(("vegetal", "ADJ"))]={"concepts":{0:{'name':'vegetal', 'type':{'adj':1.0}, 'used':False}}, "mods":{0:{"vegetal":1.0}}, "relations":{0:[]}} # + sentence relations
+output[str(("static", "ADJ"))]={"concepts":{0:{'name':'static', 'type':{'adj':1.0}, 'used':False}}, "mods":{0:{"static":1.0}}, "relations":{0:[]}} # + sentence relations
+output[str(("fluid", "ADJ"))]={"concepts":{0:{'name':'fluid', 'type':{'adj':1.0}, 'used':False}}, "mods":{0:{"fluid":1.0}}, "relations":{0:[]}}
+output[str(("large", "ADJ"))]={"concepts":{0:{'name':'large', 'type':{'adj':1.0}, 'used':False}}, "mods":{0:{"big":1.0}}, "relations":{0:[]}}
+output[str(("big", "ADJ"))]={"concepts":{0:{'name':'big', 'type':{'adj':1.0}, 'used':False}}, "mods":{0:{"big":1.0}}, "relations":{0:[]}}
+output[str(("small", "ADJ"))]={"concepts":{0:{'name':'small', 'type':{'adj':1.0}, 'used':False}}, "mods":{0:{"small":1.0}}, "relations":{0:[]}}
+output[str(("animal", "ADJ"))]={"concepts":{0:{'name':'animal', 'type':{'adj':1.0}, 'used':False}}, "mods":{0:{"animal":1.0}}, "relations":{0:[]}}
+output[str(("edible", "ADJ"))]={"concepts":{0:{'name':'edible', 'type':{'adj':1.0}, 'used':False}}, "mods":{0:{"edible":1.0}}, "relations":{0:[]}}
+output[str(("solid", "ADJ"))]={"concepts":{0:{'name':'solid', 'type':{'adj':1.0}, 'used':False}}, "mods":{0:{"static":1.0}}, "relations":{0:[]}}
 #output[str(("body", "ADJ"))]={"concepts":[{'name':'adj', 'args':[]}], "relations":[{"name":"body", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("static", "ADJ"))]={"concepts":[{'name':'adj', 'args':[]}], "relations":[{"name":"static", "val":1.0, 'arg':{'index':0}}]}
 #output[str(("burning", "ADJ"))]={"concepts":[{'name':'adj', 'args':[]}], "relations":[{"name":"burning", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("fluid", "ADJ"))]={"concepts":[{'name':'adj', 'args':[]}], "relations":[{"name":"fluid", "val":1.0, 'arg':{'index':0}}]}
 #output[str(("vehicle", "ADJ"))]={"concepts":[{'name':'adj', 'args':[]}], "relations":[{"name":"vehicle", "val":1.0, 'arg':{'index':0}}]}
 #output[str(("transport", "ADJ"))]={"concepts":[{'name':'adj', 'args':[]}], "relations":[{"name":"vehicle", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("animal", "ADJ"))]={"concepts":[{'name':'adj', 'args':[]}], "relations":[{"name":"animal", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("edible", "ADJ"))]={"concepts":[{'name':'adj', 'args':[]}], "relations":[{"name":"edible", "val":1.0, 'arg':{'index':0}}]}
 #output[str(("weapon", "ADJ"))]={"concepts":[{'name':'adj', 'args':[]}], "relations":[{"name":"weapon", "val":1.0, 'arg':{'index':0}}]}
 #output[str(("group", "ADJ"))]={"concepts":[{'name':'adj', 'args':[]}], "relations":[{"name":"group", "val":1.0, 'arg':{'index':0}}]}
 #output[str(("plural", "ADJ"))]={"concepts":[{'name':'adj', 'args':[]}], "relations":[{"name":"group", "val":1.0, 'arg':{'index':0}}]}
 #output[str(("moving", "ADJ"))]={"concepts":[{'name':'adj', 'args':[]}], "relations":[{"name":"moving", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("solid", "ADJ"))]={"concepts":[{'name':'adj', 'args':[]}], "relations":[{"name":"solid", "val":1.0, 'arg':{'index':0}}]}
 #output[str(("exit", "ADJ"))]={"concepts":[{'name':'adj', 'args':[]}], "relations":[{"name":"exit", "val":1.0, 'arg':{'index':0}}]}
 
 # Verbs
-output[str(("cause", "VERB"))]={"concepts":{0:{'name':'cause', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"cause":1.0}}, "relations":{0:[]}} # + sentence relations
-output[str(("have", "VERB"))]={"concepts":{0:{'name':'have', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"have":1.0}}, "relations":{0:[]}} # + sentence relations
-output[str(("grab", "VERB"))]={"concepts":{0:{'name':'grab', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"have":1.0}}, "relations":{0:[]}} # + sentence relations
-output[str(("take", "VERB"))]={"concepts":{0:{'name':'take', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"have":1.0}}, "relations":{0:[]}} # + sentence relations
-output[str(("hold", "VERB"))]={"concepts":{0:{'name':'hold', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"have":1.0}}, "relations":{0:[]}} # + sentence relations
-output[str(("drop", "VERB"))]={"concepts":{0:{'name':'drop', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"drop":1.0}}, "relations":{0:[]}} # + sentence relations
-output[str(("release", "VERB"))]={"concepts":{0:{'name':'release', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"drop":1.0}}, "relations":{0:[]}} # + sentence relations
-#output[str(("be", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"be", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("move", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"move", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("use", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"use", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("become", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"become", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("consume", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"consume", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("attack", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"hit", "val":1.0, 'arg':{'index':0}}]}
+output[str(("cause", "VERB"))]={"concepts":{0:{'name':'cause', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"cause":1.0}}, "relations":{0:[]}}
+output[str(("have", "VERB"))]={"concepts":{0:{'name':'have', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"have":1.0}}, "relations":{0:[]}}
+output[str(("grab", "VERB"))]={"concepts":{0:{'name':'grab', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"have":1.0}}, "relations":{0:[]}}
+output[str(("take", "VERB"))]={"concepts":{0:{'name':'take', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"have":1.0}}, "relations":{0:[]}}
+output[str(("hold", "VERB"))]={"concepts":{0:{'name':'hold', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"have":1.0}}, "relations":{0:[]}}
+output[str(("drop", "VERB"))]={"concepts":{0:{'name':'drop', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"drop":1.0}}, "relations":{0:[]}}
+output[str(("release", "VERB"))]={"concepts":{0:{'name':'release', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"drop":1.0}}, "relations":{0:[]}}
+output[str(("be", "VERB"))]={"concepts":{0:{'name':'be', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"be":1.0}}, "relations":{0:[]}}
+output[str(("become", "VERB"))]={"concepts":{0:{'name':'become', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"become":1.0}}, "relations":{0:[]}}
+output[str(("move", "VERB"))]={"concepts":{0:{'name':'move', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"move":1.0}}, "relations":{0:[]}}
+output[str(("use", "VERB"))]={"concepts":{0:{'name':'use', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"use":1.0}}, "relations":{0:[]}}
+output[str(("consume", "VERB"))]={"concepts":{0:{'name':'consume', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"consume":1.0}}, "relations":{0:[]}}
+output[str(("attack", "VERB"))]={"concepts":{0:{'name':'attack', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"hit":1.0}}, "relations":{0:[]}}
+output[str(("hit", "VERB"))]={"concepts":{0:{'name':'hit', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"hit":1.0}}, "relations":{0:[]}}
+output[str(("enter", "VERB"))]={"concepts":{0:{'name':'enter', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"enter":1.0}}, "relations":{0:[]}}
+output[str(("exit", "VERB"))]={"concepts":{0:{'name':'exit', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"exit":1.0}}, "relations":{0:[]}}
 #output[str(("turn", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"turn", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("hit", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"hit", "val":1.0, 'arg':{'index':0}}]}
 #output[str(("create", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"create", "val":1.0, 'arg':{'index':0}}]}
 #output[str(("build", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"create", "val":1.0, 'arg':{'index':0}}]}
 #output[str(("produce", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"create", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("enter", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"enter", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("exit", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"exit", "val":1.0, 'arg':{'index':0}}]}
 
 # Nouns
-output[str(("member", "NOUN"))]={"concepts":{0:{'name':'member', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"being":1.0}}, "relations":{0:[]}}
-output[str(("plant", "NOUN"))]={"concepts":{0:{'name':'plant', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"vegetal":0.33, "body":0.33, "static":0.33}}, "relations":{0:[]}} # + sentence relations
+output[str(("plant", "NOUN"))]={"concepts":{0:{'name':'plant', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"vegetal":0.33, "body":0.33, "static":0.33}}, "relations":{0:[]}}
 output[str(("body", "NOUN"))]={"concepts":{0:{'name':'body', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"body":1.0}}, "relations":{0:[]}}
 output[str(("item", "NOUN"))]={"concepts":{0:{'name':'item', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"body":1.0}}, "relations":{0:[]}}
-#output[str(("object", "NOUN"))]={"concepts":[{'name':'object', 'args':[]}], "relations":[{"name":"object", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("fire", "NOUN"))]={"concepts":[{'name':'fire', 'args':[]}], "relations":[{"name":"burning", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("fluid", "NOUN"))]={"concepts":[{'name':'fluid', 'args':[]}], "relations":[{"name":"fluid", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("liquid", "NOUN"))]={"concepts":[{'name':'liquid', 'args':[]}], "relations":[{"name":"fluid", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("water", "NOUN"))]={"concepts":[{'name':'water', 'args':[]}], "relations":[{"name":"fluid", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("vehicle", "NOUN"))]={"concepts":[{'name':'vehicle', 'args':[]}], "relations":[{"name":"vehicle", "val":0.5, 'arg':{'index':0}}, {"name":"body", "val":0.5, 'arg':{'index':0}}]}
-#output[str(("transport", "NOUN"))]={"concepts":[{'name':'transport', 'args':[]}], "relations":[{"name":"vehicle", "val":0.5, 'arg':{'index':0}}, {"name":"body", "val":0.5, 'arg':{'index':0}}]}
-#output[str(("animal", "NOUN"))]={"concepts":[{'name':'animal', 'args':[]}], "relations":[{"name":"animal", "val":0.5, 'arg':{'index':0}}, {"name":"body", "val":0.5, 'arg':{'index':0}}]}
-#output[str(("being", "NOUN"))]={"concepts":[{'name':'being', 'args':[]}], "relations":[{"name":"animal", "val":0.5, 'arg':{'index':0}}, {"name":"body", "val":0.5, 'arg':{'index':0}}]}
-#output[str(("food", "NOUN"))]={"concepts":[{'name':'food', 'args':[]}], "relations":[{"name":"edible", "val":0.5, 'arg':{'index':0}}, {"name":"body", "val":0.5, 'arg':{'index':0}}]}
-#output[str(("weapon", "NOUN"))]={"concepts":[{'name':'weapon', 'args':[]}], "relations":[{"name":"weapon", "val":0.5, 'arg':{'index':0}}, {"name":"body", "val":0.5, 'arg':{'index':0}}]}
-#output[str(("group", "NOUN"))]={"concepts":[{'name':'group', 'args':[]}], "relations":[{"name":"group", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("tract", "NOUN"))]={"concepts":[{'name':'group', 'args':[]}], "relations":[{"name":"group", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("extent", "NOUN"))]={"concepts":[{'name':'group', 'args':[]}], "relations":[{"name":"group", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("stream", "NOUN"))]={"concepts":[{'name':'stream', 'args':[]}], "relations":[{"name":"stream", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("source", "NOUN"))]={"concepts":[{'name':'source', 'args':[]}], "relations":[{"name":"source", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("air", "NOUN"))]={"concepts":[{'name':'air', 'args':[]}], "relations":[{"name":"fluid", "val":1.0, 'arg':{'index':0}}]}
+output[str(("member", "NOUN"))]={"concepts":{0:{'name':'member', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"being":1.0}}, "relations":{0:[]}}
+output[str(("object", "NOUN"))]={"concepts":{0:{'name':'object', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"object":1.0}}, "relations":{0:[]}}
+output[str(("fire", "NOUN"))]={"concepts":{0:{'name':'fire', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"burning":1.0}}, "relations":{0:[]}}
+output[str(("fluid", "NOUN"))]={"concepts":{0:{'name':'fluid', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"fluid":1.0}}, "relations":{0:[]}}
+output[str(("liquid", "NOUN"))]={"concepts":{0:{'name':'liquid', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"fluid":1.0}}, "relations":{0:[]}}
+output[str(("water", "NOUN"))]={"concepts":{0:{'name':'water', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"fluid":1.0}}, "relations":{0:[]}}
+output[str(("vehicle", "NOUN"))]={"concepts":{0:{'name':'vehicle', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"vehicle":0.5, "body":0.5}}, "relations":{0:[]}}
+output[str(("transport", "NOUN"))]={"concepts":{0:{'name':'transport', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"vehicle":0.5, "body":0.5}}, "relations":{0:[]}}
+output[str(("animal", "NOUN"))]={"concepts":{0:{'name':'animal', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"animal":0.5, "body":0.5}}, "relations":{0:[]}}
+output[str(("being", "NOUN"))]={"concepts":{0:{'name':'being', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"animal":0.5, "body":0.5}}, "relations":{0:[]}}
+output[str(("food", "NOUN"))]={"concepts":{0:{'name':'food', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"edible":0.5, "body":0.5}}, "relations":{0:[]}}
+output[str(("weapon", "NOUN"))]={"concepts":{0:{'name':'weapon', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"weapon":0.5, "body":0.5}}, "relations":{0:[]}}
+output[str(("group", "NOUN"))]={"concepts":{0:{'name':'group', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"group":1.0}}, "relations":{0:[]}}
+output[str(("tract", "NOUN"))]={"concepts":{0:{'name':'tract', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"group":1.0}}, "relations":{0:[]}}
+output[str(("extent", "NOUN"))]={"concepts":{0:{'name':'extent', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"group":1.0}}, "relations":{0:[]}}
+output[str(("steam", "NOUN"))]={"concepts":{0:{'name':'steam', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"steam":1.0}}, "relations":{0:[]}}
+output[str(("source", "NOUN"))]={"concepts":{0:{'name':'source', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"source":1.0}}, "relations":{0:[]}}
+output[str(("air", "NOUN"))]={"concepts":{0:{'name':'air', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"fluid":1.0}}, "relations":{0:[]}}
+output[str(("building", "NOUN"))]={"concepts":{0:{'name':'building', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"location":0.33, "body":0.33, "static":0.33}}, "relations":{0:[]}}
+output[str(("location", "NOUN"))]={"concepts":{0:{'name':'location', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"location":1.0}}, "relations":{0:[]}}
+output[str(("place", "NOUN"))]={"concepts":{0:{'name':'place', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"location":1.0}}, "relations":{0:[]}}
+output[str(("region", "NOUN"))]={"concepts":{0:{'name':'region', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"location":1.0}}, "relations":{0:[]}}
+output[str(("area", "NOUN"))]={"concepts":{0:{'name':'area', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"location":1.0}}, "relations":{0:[]}}
+output[str(("exit", "NOUN"))]={"concepts":{0:{'name':'exit', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"exit":1.0}}, "relations":{0:[]}}
 #output[str(("movement", "NOUN"))]={"concepts":[{'name':'movement', 'args':[]}], "relations":[{"name":"group", "val":0.5, 'arg':{'index':0}}, {"name":"moving", "val":0.5, 'arg':{'index':0}}]}
 #output[str(("motion", "NOUN"))]={"concepts":[{'name':'motion', 'args':[]}], "relations":[{"name":"group", "val":0.5, 'arg':{'index':0}}, {"name":"moving", "val":0.5, 'arg':{'index':0}}]}
 #output[str(("action", "NOUN"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"action", "val":1.0, 'arg':{'index':0}}]}
 #output[str(("act", "NOUN"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"action", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("building", "NOUN"))]={"concepts":[{'name':'building', 'args':[]}], "relations":[{"name":"body", "val":0.33, 'arg':{'index':0}}, {"name":"location", "val":0.33, 'arg':{'index':0}}, {"name":"static", "val":0.33, 'arg':{'index':0}}]}
-#output[str(("location", "NOUN"))]={"concepts":[{'name':'location', 'args':[]}], "relations":[{"name":"location", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("place", "NOUN"))]={"concepts":[{'name':'place', 'args':[]}], "relations":[{"name":"location", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("region", "NOUN"))]={"concepts":[{'name':'region', 'args':[]}], "relations":[{"name":"location", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("area", "NOUN"))]={"concepts":[{'name':'area', 'args':[]}], "relations":[{"name":"location", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("exit", "NOUN"))]={"concepts":[{'name':'exit', 'args':[]}], "relations":[{"name":"exit", "val":1.0, 'arg':{'index':0}}]}
 
 ### Word Preprocessing
 # Simply creates a word defining dictionary
@@ -155,6 +158,8 @@ def process_sentence(w):
             if ssw in output:
                 sout = output[ssw]
                 out['phrase'][sw]['concepts'] = deepcopy(sout['concepts'])
+                for c in out['phrase'][sw]['concepts']:
+                    out['phrase'][sw]['concepts'][c]["sname"] = sw[0]
                 out['phrase'][sw]['mods'] = deepcopy(sout['mods'])
                 out['phrase'][sw]['relations'] = deepcopy(sout['relations'])
             else:
@@ -179,15 +184,14 @@ def process_sentence(w):
                     # Construct sdict
                     for addi in sdict['addc']:
                         sdict['concepts'][i + addi] = deepcopy(sdict['addc'][addi])
+                        # Used processing : if you are not a main, by default, you are used
+                        sdict['concepts'][i + addi]['used'] = True
                         sdict['mods'][i + addi] = deepcopy(sdict['addm'][addi])
                         sdict['relations'][i + addi] = deepcopy(sdict['addr'][addi])
                         for r in sdict['relations'][i + addi]:
                             r['index'] += i
                     # If is not main
                     if not sdict['main']:
-                        # Relation processing, TODO factorize
-                        for i in sdict['concepts']:
-                            sdict['concepts'][i]['used'] = True
                         # Add self to shead addc, addr
                         hdict = out['phrase'][sdict['shead']]
                         # Find addi
@@ -212,7 +216,7 @@ def process_sentence(w):
                     sdict['unready'] -= 1
                     # If is main
                     if sdict['main']:
-                        # Relation processing, TODO factorize
+                        # Used processing, by relation processing
                         for i in sdict['concepts']:
                             for relation in sdict['relations'][i]:
                                 if relation["dep"] == 'nsubj' or relation["dep"] == 'nsubjpass':
@@ -236,24 +240,35 @@ def process_sentence(w):
 def process_relations(w):
     word, pos = eval(w)
     out = output[w]
-    # Loop on concepts
+    # Remove used concept that you can process (i.e. dep amod)
     for concept_index in out['concepts']:
         # Get the concept type
         concept_type = max(out['concepts'][concept_index]['type'], key=out['concepts'][concept_index]['type'].get)
         # Loop in relation of this specific concept, using iterator in order to use the remove_relation function
-        for i in range(len(out['relations'][concept_index])):
-            relation_i = out['relations'][concept_index][i]
+        for relation in out['relations'][concept_index]:
             # Getting relation concept info
-            relation_dep = relation_i['dep']
-            relation_chain = relation_i['chain']
-            relation_concept_index = relation_i['index']
+            relation_dep = relation['dep']
+            relation_chain = relation['chain']
+            relation_concept_index = relation['index']
             relation_concept_type = max(out['concepts'][relation_concept_index]['type'], key=out['concepts'][relation_concept_index]['type'].get)
-            # If concept has a subject then concept is used
-            if relation_dep == 'nsubj' or relation_dep == 'nsubjpass':
-                out['concepts'][concept_index]['used'] = True
+            # TODO
+    # Check concepts are related
+    is_related = {}
+    for concept_index in out['concepts']:
+        for relation in out['relations'][concept_index]:
+            if relation["dep"] == 'nsubj' or relation["dep"] == 'nsubjpass':
+                is_related[concept_index] = True
             else:
-                out['concepts'][relation_concept_index]['used'] = True
-        # Second step remove the used concept that you can process (i.e adj with dep amod)
+                is_related[relation["index"]] = True
+    # If concept are used but not related then remove them
+    concepts_to_remove = []
+    for concept_index in out['concepts']:
+        if out["concepts"][concept_index]["used"] and not concept_index in is_related:
+            concepts_to_remove.append(concept_index)
+    for concept_index in concepts_to_remove:
+        out["concepts"].pop(concept_index)
+        out["mods"].pop(concept_index)
+        out["relations"].pop(concept_index)
 
 def compute(input_words, nb):
     words = input_words
@@ -281,7 +296,7 @@ def compute(input_words, nb):
             ## Process sentence
             process_sentence(w)
             ## Process relations
-            #process_relations(w)
+            process_relations(w)
             ## Process synonyms TODO
 
 ## Test
