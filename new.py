@@ -159,7 +159,8 @@ def process_sentence(w):
                 sout = output[ssw]
                 out['phrase'][sw]['concepts'] = deepcopy(sout['concepts'])
                 for c in out['phrase'][sw]['concepts']:
-                    out['phrase'][sw]['concepts'][c]["sname"] = sw[0]
+                    if not out['phrase'][sw]['concepts'][c]["used"]:
+                        out['phrase'][sw]['concepts'][c]["sname"] = sw[0]
                 out['phrase'][sw]['mods'] = deepcopy(sout['mods'])
                 out['phrase'][sw]['relations'] = deepcopy(sout['relations'])
             else:
