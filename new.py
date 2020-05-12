@@ -18,13 +18,14 @@ output = {}
 
 print("INPUT : Defining some words")
 # Adjs
-output[str(("vegetal", "ADJ"))]={"concepts":{0:{'name':'vegetal', 'type':{'adj':1.0}, 'used':False}}, "mods":{0:{"vegetal":1.0}}, "relations":{0:[]}} # + sentence relations
-output[str(("static", "ADJ"))]={"concepts":{0:{'name':'static', 'type':{'adj':1.0}, 'used':False}}, "mods":{0:{"static":1.0}}, "relations":{0:[]}} # + sentence relations
+output[str(("vegetal", "ADJ"))]={"concepts":{0:{'name':'vegetal', 'type':{'adj':1.0}, 'used':False}}, "mods":{0:{"vegetal":1.0}}, "relations":{0:[]}}
+output[str(("static", "ADJ"))]={"concepts":{0:{'name':'static', 'type':{'adj':1.0}, 'used':False}}, "mods":{0:{"static":1.0}}, "relations":{0:[]}}
 output[str(("fluid", "ADJ"))]={"concepts":{0:{'name':'fluid', 'type':{'adj':1.0}, 'used':False}}, "mods":{0:{"fluid":1.0}}, "relations":{0:[]}}
 output[str(("large", "ADJ"))]={"concepts":{0:{'name':'large', 'type':{'adj':1.0}, 'used':False}}, "mods":{0:{"big":1.0}}, "relations":{0:[]}}
 output[str(("big", "ADJ"))]={"concepts":{0:{'name':'big', 'type':{'adj':1.0}, 'used':False}}, "mods":{0:{"big":1.0}}, "relations":{0:[]}}
 output[str(("small", "ADJ"))]={"concepts":{0:{'name':'small', 'type':{'adj':1.0}, 'used':False}}, "mods":{0:{"small":1.0}}, "relations":{0:[]}}
-output[str(("animal", "ADJ"))]={"concepts":{0:{'name':'animal', 'type':{'adj':1.0}, 'used':False}}, "mods":{0:{"animal":1.0}}, "relations":{0:[]}}
+output[str(("animal", "ADJ"))]={"concepts":{0:{'name':'animal', 'type':{'adj':1.0}, 'used':False}}, "mods":{0:{"animal":0.5, "body":0.5}}, "relations":{0:[]}}
+output[str(("human", "ADJ"))]={"concepts":{0:{'name':'human', 'type':{'adj':1.0}, 'used':False}}, "mods":{0:{"animal":0.5, "body":0.5}}, "relations":{0:[]}}
 output[str(("edible", "ADJ"))]={"concepts":{0:{'name':'edible', 'type':{'adj':1.0}, 'used':False}}, "mods":{0:{"edible":1.0}}, "relations":{0:[]}}
 output[str(("solid", "ADJ"))]={"concepts":{0:{'name':'solid', 'type':{'adj':1.0}, 'used':False}}, "mods":{0:{"static":1.0}}, "relations":{0:[]}}
 #output[str(("body", "ADJ"))]={"concepts":[{'name':'adj', 'args':[]}], "relations":[{"name":"body", "val":1.0, 'arg':{'index':0}}]}
@@ -54,10 +55,10 @@ output[str(("attack", "VERB"))]={"concepts":{0:{'name':'attack', 'type':{'action
 output[str(("hit", "VERB"))]={"concepts":{0:{'name':'hit', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"hit":1.0}}, "relations":{0:[]}}
 output[str(("enter", "VERB"))]={"concepts":{0:{'name':'enter', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"enter":1.0}}, "relations":{0:[]}}
 output[str(("exit", "VERB"))]={"concepts":{0:{'name':'exit', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"exit":1.0}}, "relations":{0:[]}}
+output[str(("produce", "VERB"))]={"concepts":{0:{'name':'produce', 'type':{'action':1.0}, 'used':False}}, "mods":{0:{"produce":1.0}}, "relations":{0:[]}}
 #output[str(("turn", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"turn", "val":1.0, 'arg':{'index':0}}]}
 #output[str(("create", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"create", "val":1.0, 'arg':{'index':0}}]}
 #output[str(("build", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"create", "val":1.0, 'arg':{'index':0}}]}
-#output[str(("produce", "VERB"))]={"concepts":[{'name':'action', 'args':[]}], "relations":[{"name":"create", "val":1.0, 'arg':{'index':0}}]}
 
 # Nouns
 output[str(("plant", "NOUN"))]={"concepts":{0:{'name':'plant', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"vegetal":0.33, "body":0.33, "static":0.33}}, "relations":{0:[]}}
@@ -72,6 +73,7 @@ output[str(("water", "NOUN"))]={"concepts":{0:{'name':'water', 'type':{'object':
 output[str(("vehicle", "NOUN"))]={"concepts":{0:{'name':'vehicle', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"vehicle":0.5, "body":0.5}}, "relations":{0:[]}}
 output[str(("transport", "NOUN"))]={"concepts":{0:{'name':'transport', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"vehicle":0.5, "body":0.5}}, "relations":{0:[]}}
 output[str(("animal", "NOUN"))]={"concepts":{0:{'name':'animal', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"animal":0.5, "body":0.5}}, "relations":{0:[]}}
+output[str(("human", "NOUN"))]={"concepts":{0:{'name':'human', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"animal":0.5, "body":0.5}}, "relations":{0:[]}}
 output[str(("being", "NOUN"))]={"concepts":{0:{'name':'being', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"animal":0.5, "body":0.5}}, "relations":{0:[]}}
 output[str(("food", "NOUN"))]={"concepts":{0:{'name':'food', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"edible":0.5, "body":0.5}}, "relations":{0:[]}}
 output[str(("weapon", "NOUN"))]={"concepts":{0:{'name':'weapon', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"weapon":0.5, "body":0.5}}, "relations":{0:[]}}
@@ -81,7 +83,9 @@ output[str(("extent", "NOUN"))]={"concepts":{0:{'name':'extent', 'type':{'object
 output[str(("steam", "NOUN"))]={"concepts":{0:{'name':'steam', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"steam":1.0}}, "relations":{0:[]}}
 output[str(("source", "NOUN"))]={"concepts":{0:{'name':'source', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"source":1.0}}, "relations":{0:[]}}
 output[str(("air", "NOUN"))]={"concepts":{0:{'name':'air', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"fluid":1.0}}, "relations":{0:[]}}
+output[str(("facility", "NOUN"))]={"concepts":{0:{'name':'facility', 'type':{'object':1.0}, 'used':False}, 1:{'name':'building', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"group":1.0}, 1:{"location":0.33, "body":0.33, "static":0.33}}, "relations":{0:[{"dep":"dobj", "chain":[{"lemma":"of", "dep":"prep"}], "index":1}], 1:[]}}
 output[str(("building", "NOUN"))]={"concepts":{0:{'name':'building', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"location":0.33, "body":0.33, "static":0.33}}, "relations":{0:[]}}
+output[str(("house", "NOUN"))]={"concepts":{0:{'name':'house', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"location":0.33, "body":0.33, "static":0.33}}, "relations":{0:[]}}
 output[str(("location", "NOUN"))]={"concepts":{0:{'name':'location', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"location":1.0}}, "relations":{0:[]}}
 output[str(("place", "NOUN"))]={"concepts":{0:{'name':'place', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"location":1.0}}, "relations":{0:[]}}
 output[str(("region", "NOUN"))]={"concepts":{0:{'name':'region', 'type':{'object':1.0}, 'used':False}}, "mods":{0:{"location":1.0}}, "relations":{0:[]}}

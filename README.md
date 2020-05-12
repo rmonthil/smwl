@@ -53,7 +53,7 @@ The result will be stored in ***output.json***.
 
 ## Todo
 
-* Clean used bat not arg neither has subj
+* Deal properly with relation dependance (i.e amod)
 
 ## Why the Godot project files are not here ?
 
