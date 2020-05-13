@@ -274,6 +274,10 @@ def process_relations(w):
         out["concepts"].pop(concept_index)
         out["mods"].pop(concept_index)
         out["relations"].pop(concept_index)
+    # If not used then update sname
+    for concept_index in out['concepts']:
+        if not out["concepts"][concept_index]["used"]:
+            out["concepts"][concept_index]["sname"] = word
 
 def compute(input_words, nb):
     words = input_words
