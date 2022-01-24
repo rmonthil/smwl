@@ -1,4 +1,4 @@
-# SMWL
+# S.M.W.L.
 
 **Search for the Minimum set of Words of a Language.**
 
